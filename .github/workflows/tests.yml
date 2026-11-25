@@ -1,0 +1,40 @@
+name: Tests
+
+on:
+  push:
+    branches: [ ci ]
+  pull_request:
+
+jobs:
+  test:
+    name: Java ${{ matrix.java }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        java: [ '8', '11', '17', '21', '25' ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Setup Java
+        uses: actions/setup-java@v6
+        with:
+          # the last one is the default: the sources are compiled with Java 8
+          java-version: |
+            ${{ matrix.java }}
+            8
+          distribution: temurin
+      # Maven Central may reply with "429 Too Many Requests"
+      - name: Cache the downloaded libraries
+        uses: actions/cache@v6
+        with:
+          path: build/lib
+          key: test-libs-${{ hashFiles('build.xml') }}
+      - name: Run tests
+        run: ant -noinput -Dtest.jvm=$JAVA_HOME_${{ matrix.java }}_X64/bin/java test
+      - name: Upload test reports
+        if: ${{ success() || failure() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-reports-java-${{ matrix.java }}
+          path: build/test-reports

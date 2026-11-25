@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Builds the XPath 2.0 processor and runs its JUnit tests outside Eclipse.
+
+  Usage:
+    ant test
+    ant test -Dtest.jvm=/path/to/another/jdk/bin/java
+-->
+<project name="xpath20" default="test" basedir=".">
+
+    <property name="engine.dir" location="webtools.sourceediting.xpath/bundles/org.eclipse.wst.xml.xpath2.processor"/>
+    <property name="tests.dir" location="webtools.sourceediting.xpath.tests/tests/org.eclipse.wst.xml.xpath2.processor.tests"/>
+    <!-- the input and expected output files of the W3C test suite -->
+    <property name="xqts.parent.dir" location="webtools.sourceediting.xpath.tests_master/tests"/>
+    <property name="test-support.dir" location="test-support/src"/>
+
+    <property name="build.dir" location="build"/>
+    <property name="lib.dir" location="${build.dir}/lib"/>
+    <property name="engine.classes" location="${build.dir}/classes/engine"/>
+    <property name="tests.classes" location="${build.dir}/classes/tests"/>
+    <property name="reports.dir" location="${build.dir}/test-reports"/>
+
+    <!-- some sources contain ISO-8859-1 characters -->
+    <property name="javac.encoding" value="ISO-8859-1"/>
+    <property name="javac.source" value="1.7"/>
+    <property name="javac.target" value="1.7"/>
+    <property name="test.jvm" value="java"/>
+
+    <property name="maven.repo" value="https://repo1.maven.org/maven2"/>
+
+    <path id="engine.classpath">
+        <pathelement location="org.apache.xerces/lib/xercesImpl.jar"/>
+        <pathelement location="org.apache.xerces/lib/xml-apis.jar"/>
+        <pathelement location="xpath2client/lib/cupv10k-runtime.jar"/>
+        <pathelement location="xpath2client/lib/icu4j.jar"/>
+    </path>
+
+    <path id="tests.classpath">
+        <pathelement location="${engine.classes}"/>
+        <path refid="engine.classpath"/>
+        <pathelement location="${tests.dir}/lib/xmlunit-1.2.jar"/>
+        <pathelement location="${lib.dir}/junit.jar"/>
+        <pathelement location="${lib.dir}/hamcrest-core.jar"/>
+        <!-- used to serialize the results that are compared with the expected ones -->
+        <pathelement location="${lib.dir}/serializer.jar"/>
+    </path>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="download-libs">
+        <mkdir dir="${lib.dir}"/>
+        <get src="${maven.repo}/junit/junit/4.13.2/junit-4.13.2.jar" dest="${lib.dir}/junit.jar" skipexisting="true"/>
+        <get src="${maven.repo}/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar" dest="${lib.dir}/hamcrest-core.jar" skipexisting="true"/>
+        <get src="${maven.repo}/xalan/serializer/2.7.3/serializer-2.7.3.jar" dest="${lib.dir}/serializer.jar" skipexisting="true"/>
+    </target>
+
+    <target name="compile">
+        <mkdir dir="${engine.classes}"/>
+        <javac srcdir="${engine.dir}/src" destdir="${engine.classes}" classpathref="engine.classpath"
+               encoding="${javac.encoding}" source="${javac.source}" target="${javac.target}"
+               includeantruntime="false" nowarn="true" debug="true">
+            <!-- the Eclipse plug-in activator -->
+            <exclude name="**/XPath2Plugin.java"/>
+        </javac>
+    </target>
+
+    <target name="compile-tests" depends="compile,download-libs">
+        <mkdir dir="${tests.classes}"/>
+        <javac destdir="${tests.classes}" classpathref="tests.classpath"
+               encoding="${javac.encoding}" source="${javac.source}" target="${javac.target}"
+               includeantruntime="false" nowarn="true" debug="true">
+            <src path="${tests.dir}/src"/>
+            <src path="${test-support.dir}"/>
+            <!-- they need a running Eclipse -->
+            <exclude name="**/TestWTPDOMXPath2.java"/>
+            <exclude name="**/XPath20TestPlugin.java"/>
+        </javac>
+        <!-- some tests load files as class path resources -->
+        <copy todir="${tests.classes}">
+            <fileset dir="${tests.dir}/src" excludes="**/*.java"/>
+        </copy>
+    </target>
+
+    <target name="test" depends="compile-tests">
+        <delete dir="${reports.dir}"/>
+        <mkdir dir="${reports.dir}"/>
+        <junit fork="true" jvm="${test.jvm}" dir="${tests.dir}" maxmemory="1g"
+               printsummary="true" failureproperty="tests.failed" errorproperty="tests.failed">
+            <classpath>
+                <pathelement location="${tests.classes}"/>
+                <path refid="tests.classpath"/>
+            </classpath>
+            <!-- see test-support/src; the first directory has the newer version of the test files -->
+            <sysproperty key="bundle.dirs" path="${tests.dir}/..${path.separator}${xqts.parent.dir}"/>
+            <sysproperty key="java.protocol.handler.pkgs" value="standalone.protocols"/>
+            <formatter type="brief" usefile="false"/>
+            <formatter type="xml"/>
+            <test name="org.eclipse.wst.xml.xpath2.processor.test.AllPsychoPathTests" todir="${reports.dir}"/>
+        </junit>
+        <fail if="tests.failed" message="Some tests failed: see ${reports.dir}"/>
+    </target>
+
+</project>
