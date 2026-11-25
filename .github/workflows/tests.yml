@@ -48,3 +48,30 @@ jobs:
         with:
           name: jars
           path: build/dist
+
+  generated:
+    name: Generated lexer and parser
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Setup Java
+        uses: actions/setup-java@v6
+        with:
+          java-version: 8
+          distribution: temurin
+      - name: Cache JFlex and CUP
+        uses: actions/cache@v6
+        with:
+          path: webtools.sourceediting.xpath/bundles/org.eclipse.wst.xml.xpath2.processor/lib
+          key: parser-tools-${{ hashFiles('webtools.sourceediting.xpath/bundles/org.eclipse.wst.xml.xpath2.processor/build.xml') }}
+      - name: Generate the lexer and the parser
+        run: ant -noinput -f webtools.sourceediting.xpath/bundles/org.eclipse.wst.xml.xpath2.processor/build.xml
+      - name: Check that they match the committed files
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            git status --short
+            git diff
+            echo '::error::The committed lexer and parser are not in sync with xpath.lex and xpath.cup: generate them with the bundle build.xml'
+            exit 1
+          fi
