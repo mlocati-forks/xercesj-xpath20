@@ -16,15 +16,24 @@
 <project name="proj1" default="generate_parser" basedir=".">
     <property name="src" location="${basedir}"/>   
     <property name="cupJar" location="${basedir}/lib/javacup10.jar"/>
+    <property name="jflexJar" location="${basedir}/lib/JFlex.jar"/>
+    <property name="maven.repo" value="https://repo1.maven.org/maven2"/>
     <description>
     Build File for Compiler Project
 </description>
 
-	<taskdef classname="JFlex.anttask.JFlexTask" name="jflex" classpath="${basedir}/lib/JFlex.jar" />
+	<!-- the versions that generated the parser and the lexer -->
+	<target name="download_tools">
+		<mkdir dir="${basedir}/lib"/>
+		<get src="${maven.repo}/de/jflex/jflex/1.4.3/jflex-1.4.3.jar" dest="${jflexJar}" skipexisting="true"/>
+		<get src="${maven.repo}/edu/princeton/cup/java-cup/10k/java-cup-10k.jar" dest="${cupJar}" skipexisting="true"/>
+	</target>
 
-	<target name="generate_parser">
+	<target name="generate_parser" depends="download_tools">
+		<taskdef classname="JFlex.anttask.JFlexTask" name="jflex" classpath="${jflexJar}" />
 		<jflex file="grammars/xpath.lex" destdir="grammars/generated"/>
-	    <java jar="${cupJar}" input="grammars/xpath.cup" output="${basedir}/JavaCUP-dump.txt" fork="true" failonerror="true">
+		<!-- the jar on Maven Central has no Main-Class -->
+	    <java classname="java_cup.Main" classpath="${cupJar}" input="grammars/xpath.cup" output="${basedir}/JavaCUP-dump.txt" fork="true" failonerror="true">
 	    	<arg value="-parser"/>
 	    	<arg value="XPathCup"/>
 	    	<arg value="-symbols"/>
