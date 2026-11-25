@@ -8,8 +8,9 @@
     ant jar
     ant jar -Dversion=1.2.2
     ant client
+    ant maven-bundle -Dversion=1.2.2 -Dmaven.groupId=... -Dmaven.artifactId=...    (see RELEASING.md)
 -->
-<project name="xpath20" default="test" basedir="." xmlns:unless="ant:unless">
+<project name="xpath20" default="test" basedir="." xmlns:if="ant:if" xmlns:unless="ant:unless">
 
     <property name="version" value="1.2.2-SNAPSHOT"/>
 
@@ -26,6 +27,7 @@
     <property name="reports.dir" location="${build.dir}/test-reports"/>
     <property name="javadoc.dir" location="${build.dir}/javadoc"/>
     <property name="dist.dir" location="${build.dir}/dist"/>
+    <property name="maven.dir" location="${build.dir}/maven"/>
     <property name="client.dir" location="xpath2client"/>
     <property name="client.classes" location="${build.dir}/classes/client"/>
     <!-- the name used by Xerces-J -->
@@ -158,6 +160,65 @@
         <dist-jar destfile="${dist.dir}/${jar.name}-javadoc.jar">
             <fileset dir="${javadoc.dir}"/>
         </dist-jar>
+    </target>
+
+    <!-- so that the jars of a release are the same as the ones built by the CI -->
+    <target name="-check-reproducible">
+        <!-- the jars store the dates in the time zone of the JVM -->
+        <fail message="The time zone must be UTC: set ANT_OPTS=-Duser.timezone=UTC">
+            <condition>
+                <not>
+                    <equals arg1="${user.timezone}" arg2="UTC"/>
+                </not>
+            </condition>
+        </fail>
+    </target>
+
+    <!-- the bundle to upload to the Central Portal: signed jars, POM and checksums in the Maven layout -->
+    <target name="maven-bundle" depends="-check-reproducible,jar">
+        <fail unless="maven.groupId" message="Set maven.groupId"/>
+        <fail unless="maven.artifactId" message="Set maven.artifactId"/>
+        <fail message="Maven Central doesn't accept SNAPSHOT versions: set one with -Dversion=...">
+            <condition>
+                <contains string="${version}" substring="SNAPSHOT"/>
+            </condition>
+        </fail>
+        <loadresource property="maven.groupPath">
+            <propertyresource name="maven.groupId"/>
+            <filterchain>
+                <tokenfilter>
+                    <replacestring from="." to="/"/>
+                </tokenfilter>
+            </filterchain>
+        </loadresource>
+        <property name="maven.name" value="${maven.artifactId}-${version}"/>
+        <property name="maven.files" location="${maven.dir}/${maven.groupPath}/${maven.artifactId}/${version}"/>
+        <delete dir="${maven.dir}"/>
+        <mkdir dir="${maven.files}"/>
+        <copy file="${dist.dir}/${jar.name}.jar" tofile="${maven.files}/${maven.name}.jar"/>
+        <copy file="${dist.dir}/${jar.name}-sources.jar" tofile="${maven.files}/${maven.name}-sources.jar"/>
+        <copy file="${dist.dir}/${jar.name}-javadoc.jar" tofile="${maven.files}/${maven.name}-javadoc.jar"/>
+        <copy file="pom.template.xml" tofile="${maven.files}/${maven.name}.pom">
+            <filterchain>
+                <expandproperties/>
+            </filterchain>
+        </copy>
+        <!-- without gpg.keyname, gpg uses its default key -->
+        <apply executable="gpg" dir="${maven.files}" failonerror="true">
+            <arg value="--local-user" if:set="gpg.keyname"/>
+            <arg value="${gpg.keyname}" if:set="gpg.keyname"/>
+            <arg value="--armor"/>
+            <arg value="--detach-sign"/>
+            <srcfile/>
+            <fileset dir="${maven.files}" includes="*.jar,*.pom"/>
+        </apply>
+        <checksum algorithm="MD5" fileext=".md5">
+            <fileset dir="${maven.files}" includes="*.jar,*.pom"/>
+        </checksum>
+        <checksum algorithm="SHA-1" fileext=".sha1">
+            <fileset dir="${maven.files}" includes="*.jar,*.pom"/>
+        </checksum>
+        <zip destfile="${dist.dir}/${maven.name}-bundle.zip" basedir="${maven.dir}"/>
     </target>
 
     <!-- compiles and runs the sample client -->
