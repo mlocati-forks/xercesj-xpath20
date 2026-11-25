@@ -27,6 +27,15 @@ public class XPathScannerTest extends TestCase {
 		}
 	}
 
+	private static void assertNotParses(String xpath) {
+		try {
+			new JFlexCupParser().parse(xpath);
+			fail("'" + xpath + "' should not be parsed");
+		} catch (XPathParserException e) {
+			// expected
+		}
+	}
+
 	public void testAsciiNames() {
 		assertParses("/abc/d-e.f_g");
 	}
@@ -42,5 +51,15 @@ public class XPathScannerTest extends TestCase {
 		// U+10000 LINEAR B SYLLABLE B008 A
 		assertParses("/a\uD800\uDC00b");
 		assertParses("/\uD800\uDC00");
+	}
+
+	public void testCharactersThatCannotStartNames() {
+		// U+00B7 MIDDLE DOT, U+0301 COMBINING ACUTE ACCENT, U+203F UNDERTIE
+		assertParses("/a\u00B7b");
+		assertParses("/cafe\u0301");
+		assertParses("/a\u203Fb");
+		assertNotParses("/\u00B7a");
+		assertNotParses("/\u0301a");
+		assertNotParses("/\u203Fa");
 	}
 }
