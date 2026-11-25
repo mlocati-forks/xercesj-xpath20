@@ -38,3 +38,13 @@ jobs:
         with:
           name: test-reports-java-${{ matrix.java }}
           path: build/test-reports
+      # every job compiles with Java 8, so one is enough
+      - name: Build the jars
+        if: ${{ matrix.java == '8' }}
+        run: ant -noinput jar
+      - name: Upload the jars
+        if: ${{ matrix.java == '8' }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: jars
+          path: build/dist

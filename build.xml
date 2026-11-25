@@ -5,8 +5,12 @@
   Usage:
     ant test
     ant test -Dtest.jvm=/path/to/another/jdk/bin/java
+    ant jar
+    ant jar -Dversion=1.2.2
 -->
-<project name="xpath20" default="test" basedir=".">
+<project name="xpath20" default="test" basedir="." xmlns:unless="ant:unless">
+
+    <property name="version" value="1.2.2-SNAPSHOT"/>
 
     <property name="engine.dir" location="webtools.sourceediting.xpath/bundles/org.eclipse.wst.xml.xpath2.processor"/>
     <property name="tests.dir" location="webtools.sourceediting.xpath.tests/tests/org.eclipse.wst.xml.xpath2.processor.tests"/>
@@ -19,6 +23,9 @@
     <property name="engine.classes" location="${build.dir}/classes/engine"/>
     <property name="tests.classes" location="${build.dir}/classes/tests"/>
     <property name="reports.dir" location="${build.dir}/test-reports"/>
+    <property name="dist.dir" location="${build.dir}/dist"/>
+    <!-- the name used by Xerces-J -->
+    <property name="jar.name" value="org.eclipse.wst.xml.xpath2.processor_${version}"/>
 
     <!-- some sources contain ISO-8859-1 characters -->
     <property name="javac.encoding" value="ISO-8859-1"/>
@@ -63,6 +70,74 @@
             <!-- the Eclipse plug-in activator -->
             <exclude name="**/XPath2Plugin.java"/>
         </javac>
+    </target>
+
+    <macrodef name="dist-jar">
+        <attribute name="destfile"/>
+        <element name="contents" implicit="true"/>
+        <sequential>
+            <jar destfile="@{destfile}" modificationtime="${jar.timestamp}">
+                <contents/>
+                <fileset file="${engine.dir}/about.html"/>
+                <manifest>
+                    <!-- instead of the exact JDK build -->
+                    <attribute name="Created-By" value="${java.specification.version}"/>
+                    <attribute name="Implementation-Title" value="XPath 2.0 Processor"/>
+                    <attribute name="Implementation-Version" value="${version}"/>
+                </manifest>
+            </jar>
+            <checksum file="@{destfile}" algorithm="SHA-512" fileext=".sha512" pattern="{0}  {1}"/>
+        </sequential>
+    </macrodef>
+
+    <!-- the date of the files in the jars: a fixed one makes the jars reproducible -->
+    <target name="-jar-timestamp">
+        <property environment="env"/>
+        <condition property="source.date.epoch.set">
+            <and>
+                <isset property="env.SOURCE_DATE_EPOCH"/>
+                <length string="${env.SOURCE_DATE_EPOCH}" when="greater" length="0"/>
+            </and>
+        </condition>
+        <fail message="SOURCE_DATE_EPOCH must be a number of seconds, not ${env.SOURCE_DATE_EPOCH}">
+            <condition>
+                <and>
+                    <isset property="source.date.epoch.set"/>
+                    <not>
+                        <matches string="${env.SOURCE_DATE_EPOCH}" pattern="^[0-9]+$"/>
+                    </not>
+                </and>
+            </condition>
+        </fail>
+        <condition property="jar.timestamp" value="${env.SOURCE_DATE_EPOCH}000">
+            <isset property="source.date.epoch.set"/>
+        </condition>
+        <exec executable="git" outputproperty="git.timestamp" errorproperty="git.error" resultproperty="git.result" failifexecutionfails="false" unless:set="jar.timestamp">
+            <arg value="log"/>
+            <arg value="-1"/>
+            <arg value="--format=%ct000"/>
+        </exec>
+        <property name="git.error" value="git not found"/>
+        <condition property="jar.timestamp" value="${git.timestamp}">
+            <equals arg1="${git.result}" arg2="0"/>
+        </condition>
+        <fail unless="jar.timestamp" message="Set SOURCE_DATE_EPOCH, or build from a git repository (git failed: ${git.error})"/>
+    </target>
+
+    <!-- so that the jar doesn't contain stale classes -->
+    <target name="-clean-engine">
+        <delete dir="${engine.classes}"/>
+    </target>
+
+    <target name="jar" depends="-jar-timestamp,-clean-engine,compile">
+        <delete dir="${dist.dir}"/>
+        <mkdir dir="${dist.dir}"/>
+        <dist-jar destfile="${dist.dir}/${jar.name}.jar">
+            <fileset dir="${engine.classes}"/>
+        </dist-jar>
+        <dist-jar destfile="${dist.dir}/${jar.name}-sources.jar">
+            <fileset dir="${engine.dir}/src" excludes="**/XPath2Plugin.java"/>
+        </dist-jar>
     </target>
 
     <target name="compile-tests" depends="compile,download-libs">
