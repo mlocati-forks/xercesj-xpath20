@@ -24,6 +24,7 @@
     <property name="engine.classes" location="${build.dir}/classes/engine"/>
     <property name="tests.classes" location="${build.dir}/classes/tests"/>
     <property name="reports.dir" location="${build.dir}/test-reports"/>
+    <property name="javadoc.dir" location="${build.dir}/javadoc"/>
     <property name="dist.dir" location="${build.dir}/dist"/>
     <property name="client.dir" location="xpath2client"/>
     <property name="client.classes" location="${build.dir}/classes/client"/>
@@ -144,6 +145,18 @@
         </dist-jar>
         <dist-jar destfile="${dist.dir}/${jar.name}-sources.jar">
             <fileset dir="${engine.dir}/src" excludes="**/XPath2Plugin.java"/>
+        </dist-jar>
+        <delete dir="${javadoc.dir}"/>
+        <!-- without doclint, the old comments would stop the build -->
+        <!-- en_US: otherwise the language of the pages depends on the system -->
+        <javadoc destdir="${javadoc.dir}" classpathref="engine.classpath" locale="en_US"
+                 encoding="${javac.encoding}" docencoding="UTF-8" charset="UTF-8" source="${javac.source}"
+                 additionalparam="-Xdoclint:none -notimestamp -quiet" failonerror="true"
+                 windowtitle="XPath 2.0 Processor ${version}">
+            <fileset dir="${engine.dir}/src" includes="**/*.java" excludes="**/XPath2Plugin.java"/>
+        </javadoc>
+        <dist-jar destfile="${dist.dir}/${jar.name}-javadoc.jar">
+            <fileset dir="${javadoc.dir}"/>
         </dist-jar>
     </target>
 
