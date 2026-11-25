@@ -19,7 +19,7 @@
 
 package org.eclipse.wst.xml.xpath2.processor.internal;
 
-import java_cup.runtime.*;
+import org.eclipse.wst.xml.xpath2.processor.internal.cup.*;
 
 
 /**
@@ -28,7 +28,7 @@ import java_cup.runtime.*;
  * on 4/8/14 1:20 PM from the specification file
  * <tt>C:/eclipseWorkspace/psychopathWS/org.eclipse.wst.xml.xpath2.processor_R3_2_maint/grammars/xpath.lex</tt>
  */
-class XPathFlex implements java_cup.runtime.Scanner {
+class XPathFlex implements org.eclipse.wst.xml.xpath2.processor.internal.cup.Scanner {
 
   /** This character denotes the end of file */
   public static final int YYEOF = -1;
@@ -863,7 +863,7 @@ class XPathFlex implements java_cup.runtime.Scanner {
    * @return      the next token
    * @exception   java.io.IOException  if any I/O-Error occurs
    */
-  public java_cup.runtime.Symbol next_token() throws java.io.IOException {
+  public org.eclipse.wst.xml.xpath2.processor.internal.cup.Symbol next_token() throws java.io.IOException {
     int zzInput;
     int zzAction;
 
@@ -1362,7 +1362,7 @@ class XPathFlex implements java_cup.runtime.Scanner {
           if (zzInput == YYEOF && zzStartRead == zzCurrentPos) {
             zzAtEOF = true;
             zzDoEOF();
-              { return new java_cup.runtime.Symbol(sym.EOF); }
+              { return new org.eclipse.wst.xml.xpath2.processor.internal.cup.Symbol(sym.EOF); }
           } 
           else {
             zzScanError(ZZ_NO_MATCH);

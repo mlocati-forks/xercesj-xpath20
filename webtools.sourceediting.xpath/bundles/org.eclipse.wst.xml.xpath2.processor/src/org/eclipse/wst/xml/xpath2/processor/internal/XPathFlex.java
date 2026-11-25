@@ -21,7 +21,7 @@ package org.eclipse.wst.xml.xpath2.processor.internal;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import java_cup.runtime.Symbol;
+import org.eclipse.wst.xml.xpath2.processor.internal.cup.Symbol;
 
 
 /**
@@ -30,7 +30,7 @@ import java_cup.runtime.Symbol;
  * on 4/7/14 3:51 PM from the specification file
  * <tt>xpath.lex</tt>
  */
-public class XPathFlex implements java_cup.runtime.Scanner {
+public class XPathFlex implements org.eclipse.wst.xml.xpath2.processor.internal.cup.Scanner {
 
   /** This character denotes the end of file */
   public static final int YYEOF = -1;
@@ -804,7 +804,7 @@ public class XPathFlex implements java_cup.runtime.Scanner {
    * @return      the next token
    * @exception   java.io.IOException  if any I/O-Error occurs
    */
-  public java_cup.runtime.Symbol next_token() throws java.io.IOException {
+  public org.eclipse.wst.xml.xpath2.processor.internal.cup.Symbol next_token() throws java.io.IOException {
     int zzInput;
     int zzAction;
 
@@ -1303,7 +1303,7 @@ public class XPathFlex implements java_cup.runtime.Scanner {
           if (zzInput == YYEOF && zzStartRead == zzCurrentPos) {
             zzAtEOF = true;
             zzDoEOF();
-              { return new java_cup.runtime.Symbol(XpathSym.EOF); }
+              { return new org.eclipse.wst.xml.xpath2.processor.internal.cup.Symbol(XpathSym.EOF); }
           } 
           else {
             zzScanError(ZZ_NO_MATCH);

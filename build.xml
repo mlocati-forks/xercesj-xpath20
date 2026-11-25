@@ -38,7 +38,6 @@
     <path id="engine.classpath">
         <pathelement location="org.apache.xerces/lib/xercesImpl.jar"/>
         <pathelement location="org.apache.xerces/lib/xml-apis.jar"/>
-        <pathelement location="xpath2client/lib/cupv10k-runtime.jar"/>
     </path>
 
     <path id="tests.classpath">

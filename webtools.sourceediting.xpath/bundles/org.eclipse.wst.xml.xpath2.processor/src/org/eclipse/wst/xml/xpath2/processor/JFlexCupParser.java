@@ -14,7 +14,7 @@ package org.eclipse.wst.xml.xpath2.processor;
 
 import java.io.StringReader;
 
-import java_cup.runtime.Symbol;
+import org.eclipse.wst.xml.xpath2.processor.internal.cup.Symbol;
 
 import org.eclipse.wst.xml.xpath2.processor.ast.XPath;
 import org.eclipse.wst.xml.xpath2.processor.internal.CupError;

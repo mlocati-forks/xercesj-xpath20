@@ -17,7 +17,7 @@
 
 package org.eclipse.wst.xml.xpath2.processor.internal;
 
-import java_cup.runtime.*;
+import org.eclipse.wst.xml.xpath2.processor.internal.cup.*;
 
 %%
 
