@@ -19,6 +19,8 @@ package org.eclipse.wst.xml.xpath2.processor.internal.function;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.wst.xml.xpath2.processor.DynamicError;
 import org.eclipse.wst.xml.xpath2.processor.ResultSequence;
@@ -27,8 +29,6 @@ import org.eclipse.wst.xml.xpath2.processor.internal.SeqType;
 import org.eclipse.wst.xml.xpath2.processor.internal.types.QName;
 import org.eclipse.wst.xml.xpath2.processor.internal.types.XSBoolean;
 import org.eclipse.wst.xml.xpath2.processor.internal.types.XSString;
-import org.eclipse.wst.xml.xpath2.processor.regex.Matcher;
-import org.eclipse.wst.xml.xpath2.processor.regex.PatternSyntaxException;
 
 /**
  * The function returns true if $input matches the regular expression supplied
@@ -95,8 +95,7 @@ public class FnMatches extends AbstractRegExFunction {
 		try {
 			boolean result = false;
 			
-			Matcher m = regex(trfPatternStrForSubtraction(pattern), 
-					                             flags, str1);
+			Matcher m = regex(pattern, flags, str1);
 			while (m.find()) {
 				result = true;
 			}

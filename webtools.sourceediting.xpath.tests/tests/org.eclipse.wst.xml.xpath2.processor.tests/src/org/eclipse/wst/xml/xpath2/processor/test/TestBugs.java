@@ -3025,7 +3025,7 @@ public class TestBugs extends AbstractPsychoPathTest {
 		DynamicContext dc = setupDynamicContext(schema);
 
 		// test a)
-		String xpath = "matches('123', '[0 - 9]{3}', 'x')";
+		String xpath = "matches('123', '[0-9] {3}', 'x')";
 		XPath path = compileXPath(dc, xpath);
 		Evaluator eval = new DefaultEvaluator(dc, domDoc);
  	    ResultSequence rs = eval.evaluate(path);
@@ -3057,6 +3057,18 @@ public class TestBugs extends AbstractPsychoPathTest {
 	    
 	    // test f)
  	    xpath = "matches('ab\r', '.{3}')";
+		path = compileXPath(dc, xpath);
+	    rs = eval.evaluate(path);
+	    assertEquals(false, ((XSBoolean) rs.first()).value());
+	    
+  	    // test g): x keeps the whitespace within character classes: [0 - 9] contains 0, the space and 9
+ 	    xpath = "matches('0 9', '^[0 - 9]{3}$', 'x')";
+		path = compileXPath(dc, xpath);
+	    rs = eval.evaluate(path);
+	    assertEquals(true, ((XSBoolean) rs.first()).value());
+	    
+  	    // test h): in [0 - 9], - is not a character but a range
+ 	    xpath = "matches('-', '[0 - 9]', 'x')";
 		path = compileXPath(dc, xpath);
 	    rs = eval.evaluate(path);
 	    assertEquals(false, ((XSBoolean) rs.first()).value());

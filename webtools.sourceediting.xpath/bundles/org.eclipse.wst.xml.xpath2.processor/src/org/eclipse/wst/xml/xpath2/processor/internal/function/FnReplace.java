@@ -18,6 +18,8 @@ package org.eclipse.wst.xml.xpath2.processor.internal.function;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.wst.xml.xpath2.processor.DynamicError;
 import org.eclipse.wst.xml.xpath2.processor.ResultSequence;
@@ -25,8 +27,6 @@ import org.eclipse.wst.xml.xpath2.processor.ResultSequenceFactory;
 import org.eclipse.wst.xml.xpath2.processor.internal.SeqType;
 import org.eclipse.wst.xml.xpath2.processor.internal.types.QName;
 import org.eclipse.wst.xml.xpath2.processor.internal.types.XSString;
-import org.eclipse.wst.xml.xpath2.processor.regex.Matcher;
-import org.eclipse.wst.xml.xpath2.processor.regex.PatternSyntaxException;
 
 
 /**
@@ -95,8 +95,7 @@ public class FnReplace extends AbstractRegExFunction {
 		String replacement = ((XSString) arg3.first()).value();
 		
 		try {
-			Matcher matcher = regex(trfPatternStrForSubtraction(pattern), flags, 
-					                                                  str1);
+			Matcher matcher = regex(pattern, flags, str1);
 			rs.add(new XSString(matcher.replaceAll(replacement)));
 			return rs; 
 		} catch (PatternSyntaxException ex) {

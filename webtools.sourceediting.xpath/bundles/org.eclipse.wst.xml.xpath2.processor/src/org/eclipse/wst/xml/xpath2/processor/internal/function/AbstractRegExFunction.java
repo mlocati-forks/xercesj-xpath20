@@ -9,12 +9,14 @@
  *     David Carver - bug 262765 - initial API and implementation
  *     Mukul Gandhi - bug 280798 - PsychoPath XPath 2.0 support for JDK 1.4
  *     Mukul Gandhi - Fixes for XercesJ bug https://issues.apache.org/jira/browse/XERCESJ-1732
+ *     Michele Locati - use java.util.regex, through RegexTranslator
  *******************************************************************************/
 package org.eclipse.wst.xml.xpath2.processor.internal.function;
 
+import java.util.regex.Matcher;
+
 import org.eclipse.wst.xml.xpath2.processor.internal.types.QName;
-import org.eclipse.wst.xml.xpath2.processor.regex.Matcher;
-import org.eclipse.wst.xml.xpath2.processor.regex.Pattern;
+import org.eclipse.wst.xml.xpath2.processor.internal.utils.RegexTranslator;
 
 
 public abstract class AbstractRegExFunction extends Function {
@@ -28,29 +30,8 @@ public abstract class AbstractRegExFunction extends Function {
 		super(name, min_arity, max_arity);
 	}
 	
-	/*
-	 * Transform input pattern string, to resolve differences between, 
-	 * XSD regex subtraction operator and java regex subtraction operator. 
-	 */
-	protected static String trfPatternStrForSubtraction(String pattern) {
-		String transformedPatternStr = pattern;
-		
-		int indx1 = transformedPatternStr.indexOf("-[");
-		if (indx1 != -1) {
-			String subsPrev = transformedPatternStr.substring(0, indx1);
-			String subsAfter = transformedPatternStr.substring(indx1 + 2);
-			if ((subsPrev.indexOf("[") != -1) && (subsAfter.indexOf("]]") != -1)) {
-				transformedPatternStr = transformedPatternStr.replaceAll("\\-\\[", 
-						                                                    "&&[^");	
-			}
-		}
-		
-		return transformedPatternStr;
-	}
-	
 	protected static Matcher regex(String pattern, String flags, String src) {
-		Matcher matcher = compileAndExecute(pattern, flags, src);
-		return matcher;
+		return RegexTranslator.compile(pattern, flags).matcher(src);
 	}
 	
 	protected static boolean isFlagStrValid(String flags) {
@@ -66,29 +47,6 @@ public abstract class AbstractRegExFunction extends Function {
        }
        
        return flagStrValid; 
-	}
-	
-	private static Matcher compileAndExecute(String pattern, String flags, 
-			                                 String src) {
-		int flag = Pattern.UNIX_LINES;
-		if (flags != null) {
-			if (flags.indexOf("m") >= 0) {
-				flag = flag | Pattern.MULTILINE;
-			}
-			if (flags.indexOf("s") >= 0) {
-				flag = flag | Pattern.DOTALL;
-			}
-			if (flags.indexOf("i") >= 0) {
-				flag = flag | Pattern.CASE_INSENSITIVE;
-			}
-			
-			if (flags.indexOf("x") >= 0) {
-				flag = flag | Pattern.IGNORE_WHITESPACE;
-			}
-		}
-		
-		Pattern p = Pattern.compile(pattern, flag);
-		return p.matcher(src);
 	}
 
 }
