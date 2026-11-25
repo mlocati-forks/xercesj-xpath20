@@ -29,7 +29,6 @@ import org.eclipse.wst.xml.xpath2.processor.internal.types.XSString;
 import org.eclipse.wst.xml.xpath2.processor.internal.utils.CodePointIterator;
 import org.eclipse.wst.xml.xpath2.processor.internal.utils.StringCodePointIterator;
 
-import com.ibm.icu.lang.UCharacter;
 
 /**
  * <p>
@@ -131,10 +130,10 @@ public class FnTranslate extends Function {
 			if (replacements.containsKey(inputCodepoint)) {
 				Integer replaceWith = (Integer)replacements.get(inputCodepoint);
 				if (replaceWith != null) {
-					sb.append(UCharacter.toChars(replaceWith.intValue()));
+					sb.append(Character.toChars(replaceWith.intValue()));
 				}					
 			} else {
-				sb.append(UCharacter.toChars(input));
+				sb.append(Character.toChars(input));
 			}
 		}
 		
