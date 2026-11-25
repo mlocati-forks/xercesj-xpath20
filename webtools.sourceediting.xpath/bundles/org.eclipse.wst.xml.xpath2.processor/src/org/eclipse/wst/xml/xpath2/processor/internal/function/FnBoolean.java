@@ -75,7 +75,6 @@ public class FnBoolean extends Function {
 	 * @param arg
 	 *            Result from the expressions evaluation.
 	 * @return Result of fn:boolean operation.
-	 * @throws DynamicError 
 	 */
 	public static XSBoolean fn_boolean(ResultSequence arg) throws DynamicError {
 		if (arg.empty())

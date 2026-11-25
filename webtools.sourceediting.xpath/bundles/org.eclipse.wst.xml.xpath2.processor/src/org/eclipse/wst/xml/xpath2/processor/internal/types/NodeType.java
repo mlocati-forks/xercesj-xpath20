@@ -66,8 +66,6 @@ public abstract class NodeType extends AnyType {
 	 * 
 	 * @param node
 	 *            The Node being represented
-	 * @param document_order
-	 *            The document order
 	 */
 	public NodeType(Node node) {
 		_node = node;
@@ -350,9 +348,6 @@ public abstract class NodeType extends AnyType {
 
 	/**
 	 * Utility method to check to see if a particular TypeInfo matches.
-	 * @param typeInfo
-	 * @param typeName
-	 * @return
 	 */
 	protected boolean isType(TypeInfo typeInfo, String typeName) {
 		if (typeInfo != null) {

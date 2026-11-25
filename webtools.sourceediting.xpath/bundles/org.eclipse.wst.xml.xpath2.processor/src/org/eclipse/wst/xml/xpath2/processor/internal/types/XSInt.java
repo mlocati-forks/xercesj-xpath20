@@ -64,7 +64,6 @@ public class XSInt extends XSLong {
 	 * @param arg
 	 *            The ResultSequence from which the int is to be extracted
 	 * @return New ResultSequence consisting of the 'int' supplied
-	 * @throws DynamicError
 	 */
 	public ResultSequence constructor(ResultSequence arg) throws DynamicError {
 		ResultSequence rs = ResultSequenceFactory.create_new();

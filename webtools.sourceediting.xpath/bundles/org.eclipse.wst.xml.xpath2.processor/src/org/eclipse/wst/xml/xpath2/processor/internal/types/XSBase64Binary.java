@@ -89,7 +89,6 @@ public class XSBase64Binary extends CtrType implements CmpEq {
 	 * @param arg
 	 *            The ResultSequence from which to construct base64Binary value 
 	 * @return New ResultSequence representing base64Binary value 
-	 * @throws DynamicError
 	 */
 	public ResultSequence constructor(ResultSequence arg) throws DynamicError {
 		ResultSequence rs = ResultSequenceFactory.create_new();
@@ -149,7 +148,6 @@ public class XSBase64Binary extends CtrType implements CmpEq {
 	 *            The representation to compare with
 	 * @return True if the two representation are same. False otherwise.
 	 *         
-	 * @throws DynamicError
 	 */
 	public boolean eq(AnyType arg, DynamicContext context) throws DynamicError {
       String valToCompare = arg.string_value();

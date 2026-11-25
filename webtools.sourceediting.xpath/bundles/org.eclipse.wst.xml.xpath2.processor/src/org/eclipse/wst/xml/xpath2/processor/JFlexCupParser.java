@@ -33,7 +33,8 @@ public class JFlexCupParser implements XPathParser {
 	 * 
 	 * @param xpath
 	 *            is the xpath string.
-	 * @throws XPathParserException.
+	 * @throws XPathParserException
+	 *             if the expression cannot be parsed.
 	 * @return the xpath value.
 	 */
 	public XPath parse(String xpath) throws XPathParserException {
@@ -65,7 +66,8 @@ public class JFlexCupParser implements XPathParser {
 	 *            is the xpath string.
 	 * @param isRootlessAccess
 	 *            if 'true' then PsychoPath engine can't parse xpath expressions starting with / or //.
-	 * @throws XPathParserException.
+	 * @throws XPathParserException
+	 *             if the expression cannot be parsed.
 	 * @return the xpath value.
 	 */
 	public XPath parse(String xpath, boolean isRootlessAccess) throws XPathParserException {

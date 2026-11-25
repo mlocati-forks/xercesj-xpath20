@@ -66,7 +66,6 @@ public class XSUnsignedLong extends XSNonNegativeInteger {
 	 * @param arg
 	 *            The ResultSequence from which the unsignedLong is to be extracted
 	 * @return New ResultSequence consisting of the 'unsignedLong' supplied
-	 * @throws DynamicError
 	 */
 	public ResultSequence constructor(ResultSequence arg) throws DynamicError {
 		ResultSequence rs = ResultSequenceFactory.create_new();

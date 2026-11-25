@@ -31,7 +31,7 @@ package org.eclipse.wst.xml.xpath2.processor.internal.cup;
  * of scanners implementing <code>Scanner</code> is facilitated.
  *
  * @version last updated 23-Jul-1999
- * @author David MacMahon <davidm@smartsc.com>
+ * @author David MacMahon &lt;davidm@smartsc.com&gt;
  */
 
 /* *************************************************

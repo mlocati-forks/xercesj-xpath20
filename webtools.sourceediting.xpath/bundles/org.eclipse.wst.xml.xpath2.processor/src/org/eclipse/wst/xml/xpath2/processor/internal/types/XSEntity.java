@@ -53,7 +53,6 @@ public class XSEntity extends XSNCName {
 	 * @param arg
 	 *            The ResultSequence from which to extract the ENTITY
 	 * @return New ResultSequence consisting of the ENTITY supplied
-	 * @throws DynamicError
 	 */
 	public ResultSequence constructor(ResultSequence arg) throws DynamicError {
 		ResultSequence rs = ResultSequenceFactory.create_new();

@@ -149,11 +149,11 @@
             <fileset dir="${engine.dir}/src" excludes="**/XPath2Plugin.java"/>
         </dist-jar>
         <delete dir="${javadoc.dir}"/>
-        <!-- without doclint, the old comments would stop the build -->
+        <!-- -missing: many classes and methods have no comments -->
         <!-- en_US: otherwise the language of the pages depends on the system -->
         <javadoc destdir="${javadoc.dir}" classpathref="engine.classpath" locale="en_US"
                  encoding="${javac.encoding}" docencoding="UTF-8" charset="UTF-8" source="${javac.source}"
-                 additionalparam="-Xdoclint:none -notimestamp -quiet" failonerror="true"
+                 additionalparam="-Xdoclint:all,-missing -notimestamp -quiet" failonerror="true"
                  windowtitle="XPath 2.0 Processor ${version}">
             <fileset dir="${engine.dir}/src" includes="**/*.java" excludes="**/XPath2Plugin.java"/>
         </javadoc>

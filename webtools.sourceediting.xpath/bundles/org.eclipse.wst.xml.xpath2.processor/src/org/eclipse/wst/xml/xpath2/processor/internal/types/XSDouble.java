@@ -102,7 +102,6 @@ public class XSDouble extends NumericType {
 	 * 
 	 * @param arg
 	 *            The result sequence from which to extract the double number.
-	 * @throws DynamicError
 	 * @return A new result sequence consisting of the double number supplied.
 	 */
 	public ResultSequence constructor(ResultSequence arg) throws DynamicError {

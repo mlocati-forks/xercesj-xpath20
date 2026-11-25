@@ -66,7 +66,6 @@ public class XSUnsignedByte extends XSUnsignedShort {
 	 * @param arg
 	 *            The ResultSequence from which the unsignedByte is to be extracted
 	 * @return New ResultSequence consisting of the 'unsignedByte' supplied
-	 * @throws DynamicError
 	 */
 	public ResultSequence constructor(ResultSequence arg) throws DynamicError {
 		ResultSequence rs = ResultSequenceFactory.create_new();

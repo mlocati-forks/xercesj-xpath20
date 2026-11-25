@@ -510,7 +510,6 @@ Cloneable {
 	 * @param arg
 	 *            The result sequence from which to extract the date and time
 	 *            value.
-	 * @throws DynamicError
 	 * @return A new result sequence consisting of the date and time value
 	 *         supplied.
 	 */
@@ -773,7 +772,6 @@ Cloneable {
 	 * 
 	 * @param arg
 	 *            XSDateTime representation of the date to compare to
-	 * @throws DynamicError
 	 * @return True if the two dates and times are represent the same exact
 	 *         point in time. False otherwise.
 	 */
@@ -792,7 +790,6 @@ Cloneable {
 	 * 
 	 * @param arg
 	 *            XSDateTime representation of the date to compare to
-	 * @throws DynamicError
 	 * @return True if in time, this date and time lies before the date and time
 	 *         supplied. False otherwise.
 	 */
@@ -811,7 +808,6 @@ Cloneable {
 	 * 
 	 * @param arg
 	 *            XSDateTime representation of the date to compare to
-	 * @throws DynamicError
 	 * @return True if in time, this date and time lies after the date and time
 	 *         supplied. False otherwise.
 	 */

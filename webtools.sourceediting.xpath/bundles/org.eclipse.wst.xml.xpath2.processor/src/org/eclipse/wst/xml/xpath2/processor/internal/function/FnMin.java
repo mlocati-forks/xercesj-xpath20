@@ -62,7 +62,7 @@ public class FnMin extends Function {
 	 * 
 	 * @param args
 	 *            Result from the expressions evaluation.
-	 * @param dynamic 
+	 * @param context
 	 *            Dynamic context
 	 * @throws DynamicError
 	 *             Dynamic error.

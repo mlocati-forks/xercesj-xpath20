@@ -80,8 +80,10 @@ public abstract class Function {
 	 * 
 	 * @param name
 	 *            QName.
-	 * @param arity
-	 *            the arity of a specific function.
+	 * @param min_arity
+	 *            the minimum arity of a specific function.
+	 * @param max_arity
+	 *            the maximum arity of a specific function.
 	 */
 	public Function(QName name, int min_arity, int max_arity) {
 		_name = name;
@@ -123,8 +125,6 @@ public abstract class Function {
 	/**
 	 * Checks if this function has an to the
 	 * 
-	 * @param actual_arity
-	 * @return
 	 */
 	public boolean matches_arity(int actual_arity) {
 		if (actual_arity < min_arity()) return false;

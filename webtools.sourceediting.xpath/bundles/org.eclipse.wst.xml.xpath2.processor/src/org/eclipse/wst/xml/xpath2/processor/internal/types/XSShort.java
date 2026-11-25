@@ -64,7 +64,6 @@ public class XSShort extends XSInt {
 	 * @param arg
 	 *            The ResultSequence from which the short is to be extracted
 	 * @return New ResultSequence consisting of the 'short' supplied
-	 * @throws DynamicError
 	 */
 	public ResultSequence constructor(ResultSequence arg) throws DynamicError {
 		ResultSequence rs = ResultSequenceFactory.create_new();

@@ -132,7 +132,6 @@ public class FnDeepEqual extends AbstractCollationEqualFunction {
 	 *            input1 xpath expression/variable.
 	 * @param two
 	 *            input2 xpath expression/variable.
-	 * @param context 
 	 * @return Result of fn:deep-equal operation.
 	 */
 	public static boolean deep_equal(AnyType one, AnyType two, DynamicContext context, String collationURI) {

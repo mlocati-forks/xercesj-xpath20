@@ -110,7 +110,6 @@ public class XSGYear extends CalendarType implements CmpEq {
 	 * @param arg
 	 *            The ResultSequence from which the gYear is to be extracted
 	 * @return New ResultSequence consisting of the supplied year
-	 * @throws DynamicError
 	 */
 	public ResultSequence constructor(ResultSequence arg) throws DynamicError {
 		ResultSequence rs = ResultSequenceFactory.create_new();
@@ -272,7 +271,6 @@ public class XSGYear extends CalendarType implements CmpEq {
 	 *            The XSGYear to compare with
 	 * @return True if the two representations are of the same year. False
 	 *         otherwise
-	 * @throws DynamicError
 	 */
 	public boolean eq(AnyType arg, DynamicContext context) throws DynamicError {
 		XSGYear val = (XSGYear) NumericType.get_single_type(arg, XSGYear.class);

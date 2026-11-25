@@ -228,7 +228,6 @@ public class XSDuration extends CtrType implements CmpEq, CmpLt, CmpGt, Cloneabl
 	 * @param arg
 	 *            The duration of time to compare with
 	 * @return True if they both represent the duration of time. False otherwise
-	 * @throws DynamicError
 	 */
 	public boolean eq(AnyType arg, DynamicContext context) throws DynamicError {
 		XSDuration val = (XSDuration) NumericType.get_single_type(arg,
@@ -244,7 +243,6 @@ public class XSDuration extends CtrType implements CmpEq, CmpLt, CmpGt, Cloneabl
 	 *            The duration of time to compare with
 	 * @return True if the supplied time represents a larger duration than that
 	 *         stored. False otherwise
-	 * @throws DynamicError
 	 */
 	public boolean lt(AnyType arg, DynamicContext context) throws DynamicError {
 		XSDuration val = (XSDuration) NumericType.get_single_type(arg,
@@ -260,7 +258,6 @@ public class XSDuration extends CtrType implements CmpEq, CmpLt, CmpGt, Cloneabl
 	 *            The duration of time to compare with
 	 * @return True if the supplied time represents a smaller duration than that
 	 *         stored. False otherwise
-	 * @throws DynamicError
 	 */
 	public boolean gt(AnyType arg, DynamicContext context) throws DynamicError {
 		XSDuration val = (XSDuration) NumericType.get_single_type(arg,
@@ -318,7 +315,6 @@ public class XSDuration extends CtrType implements CmpEq, CmpLt, CmpGt, Cloneabl
 	 * @param arg
 	 *            The ResultSequence from which to extract
 	 * @return New ResultSequence consisting of the time duration extracted
-	 * @throws DynamicError
 	 */
 	public ResultSequence constructor(ResultSequence arg) throws DynamicError {
 		ResultSequence rs = ResultSequenceFactory.create_new();

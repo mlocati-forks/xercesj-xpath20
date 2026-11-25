@@ -110,7 +110,6 @@ public class XSDecimal extends NumericType {
 	 * 
 	 * @param arg
 	 *            The result sequence from which to extract the decimal number.
-	 * @throws DynamicError
 	 * @return A new result sequence consisting of the decimal number supplied.
 	 */
 	public ResultSequence constructor(ResultSequence arg) throws DynamicError {

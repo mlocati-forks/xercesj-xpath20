@@ -66,7 +66,6 @@ public class XSUnsignedInt extends XSUnsignedLong {
 	 * @param arg
 	 *            The ResultSequence from which the unsignedInt is to be extracted
 	 * @return New ResultSequence consisting of the 'unsignedInt' supplied
-	 * @throws DynamicError
 	 */
 	public ResultSequence constructor(ResultSequence arg) throws DynamicError {
 		ResultSequence rs = ResultSequenceFactory.create_new();

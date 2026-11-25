@@ -178,7 +178,6 @@ public class XSYearMonthDuration extends XSDuration implements CmpEq, CmpLt,
 	 * @param arg
 	 *            The ResultSequence from which to extract
 	 * @return New ResultSequence consisting of the time duration extracted
-	 * @throws DynamicError
 	 */
 	public ResultSequence constructor(ResultSequence arg) throws DynamicError {
 		ResultSequence rs = ResultSequenceFactory.create_new();
@@ -284,7 +283,6 @@ public class XSYearMonthDuration extends XSDuration implements CmpEq, CmpLt,
 	 * @param arg
 	 *            The duration of time to compare with
 	 * @return True if they both represent the duration of time. False otherwise
-	 * @throws DynamicError
 	 */
 	public boolean eq(AnyType arg, DynamicContext context) throws DynamicError {
 		if (arg instanceof XSDayTimeDuration) {
@@ -306,7 +304,6 @@ public class XSYearMonthDuration extends XSDuration implements CmpEq, CmpLt,
 	 *            The duration of time to compare with
 	 * @return True if the supplied time represents a larger duration than that
 	 *         stored. False otherwise
-	 * @throws DynamicError
 	 */
 	public boolean lt(AnyType arg, DynamicContext context) throws DynamicError {
 		XSYearMonthDuration val = (XSYearMonthDuration) NumericType
@@ -322,7 +319,6 @@ public class XSYearMonthDuration extends XSDuration implements CmpEq, CmpLt,
 	 *            The duration of time to compare with
 	 * @return True if the supplied time represents a smaller duration than that
 	 *         stored. False otherwise
-	 * @throws DynamicError
 	 */
 	public boolean gt(AnyType arg, DynamicContext context) throws DynamicError {
 		XSYearMonthDuration val = (XSYearMonthDuration) NumericType
@@ -339,7 +335,6 @@ public class XSYearMonthDuration extends XSDuration implements CmpEq, CmpLt,
 	 *            The duration of time to add
 	 * @return New XSYearMonthDuration representing the resulting duration
 	 *         after the addition
-	 * @throws DynamicError
 	 */
 	public ResultSequence plus(ResultSequence arg) throws DynamicError {
 		XSYearMonthDuration val = (XSYearMonthDuration) NumericType
@@ -358,7 +353,6 @@ public class XSYearMonthDuration extends XSDuration implements CmpEq, CmpLt,
 	 *            The duration of time to subtract
 	 * @return New XSYearMonthDuration representing the resulting duration
 	 *         after the subtraction
-	 * @throws DynamicError
 	 */
 	public ResultSequence minus(ResultSequence arg) throws DynamicError {
 		XSYearMonthDuration val = (XSYearMonthDuration) NumericType
@@ -377,7 +371,6 @@ public class XSYearMonthDuration extends XSDuration implements CmpEq, CmpLt,
 	 *            The duration of time to multiply by
 	 * @return New XSYearMonthDuration representing the resulting duration
 	 *         after the multiplication
-	 * @throws DynamicError
 	 */
 	public ResultSequence times(ResultSequence arg) throws DynamicError {
 		ResultSequence convertedRS = arg;		
@@ -412,7 +405,6 @@ public class XSYearMonthDuration extends XSDuration implements CmpEq, CmpLt,
 	 *            The duration of time to divide by
 	 * @return New XSYearMonthDuration representing the resulting duration
 	 *         after the division
-	 * @throws DynamicError
 	 */
 	public ResultSequence div(ResultSequence arg) throws DynamicError {
 		if (arg.size() != 1)

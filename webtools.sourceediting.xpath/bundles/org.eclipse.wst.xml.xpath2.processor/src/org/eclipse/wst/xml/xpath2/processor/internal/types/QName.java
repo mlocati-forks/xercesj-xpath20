@@ -120,7 +120,6 @@ public class QName extends CtrType implements CmpEq {
 	 * @param arg
 	 *            The ResultSequence to extract from
 	 * @return New ResultSequence consisting of the QName supplied
-	 * @throws DynamicError
 	 */
 	public ResultSequence constructor(ResultSequence arg) throws DynamicError {
 		ResultSequence rs = ResultSequenceFactory.create_new();
@@ -331,7 +330,6 @@ public class QName extends CtrType implements CmpEq {
 	 * @param arg
 	 *            The QName to compare with
 	 * @return True if the two represent the same node. False otherwise
-	 * @throws DynamicError
 	 */
 	public boolean eq(AnyType arg, DynamicContext context) throws DynamicError {
 		QName val = (QName) NumericType.get_single_type(arg, QName.class);

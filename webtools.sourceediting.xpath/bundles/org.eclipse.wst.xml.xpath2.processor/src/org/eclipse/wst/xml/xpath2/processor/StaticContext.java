@@ -247,25 +247,22 @@ public interface StaticContext {
 	
 	/**
 	 * Sets the base uri for the context.
-	 * @param baseuri
 	 * @since 1.1
 	 */
 	public void set_base_uri(String baseuri);
 	
 	/**
-	 * @since 1.1
-	 * 
 	 * Gets the collections map, which maps a String into a List of Document, in
-	 * Java5 it would be <code>Map<String, List<Document>></code>
+	 * Java5 it would be {@code Map<String, List<Document>>}
+	 * @since 1.1
 	 * 
 	 */
 	public Map get_collections();
 	
 	/**
-	 * @since 1.1
-	 * 
 	 * Sets the collections map, which maps a String into a List of Document, in
-	 * Java5 it would be <code>Map<String, List<Document>></code>
+	 * Java5 it would be {@code Map<String, List<Document>>}
+	 * @since 1.1
 	 */
 	public void set_collections(Map collections);
 	

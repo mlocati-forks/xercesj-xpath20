@@ -67,8 +67,6 @@ public class ElementType extends NodeType {
 	 * This deprecated and will be removed. Adopters need to use
 	 * ElementType(Element)
 	 * 
-	 * @param v
-	 * @param nodePosition
 	 * @deprecated Use ElementType(Element v) instead.
 	 */
 	public ElementType(Element v, int nodePosition) {

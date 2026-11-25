@@ -66,7 +66,6 @@ public class XSNMTOKEN extends XSToken {
 	 * @param arg
 	 *            The ResultSequence from which to extract the NMTOKEN
 	 * @return New ResultSequence consisting of the NMTOKEN supplied
-	 * @throws DynamicError
 	 */
 	public ResultSequence constructor(ResultSequence arg) throws DynamicError {
 		ResultSequence rs = ResultSequenceFactory.create_new();

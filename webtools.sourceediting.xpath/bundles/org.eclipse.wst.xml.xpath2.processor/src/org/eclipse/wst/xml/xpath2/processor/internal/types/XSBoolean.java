@@ -88,7 +88,6 @@ public class XSBoolean extends CtrType implements CmpEq, CmpGt, CmpLt {
 	 * 
 	 * @param arg
 	 *            The result sequence from which to extract the boolean value.
-	 * @throws DynamicError
 	 * @return A new result sequence consisting of the boolean value supplied.
 	 */
 	public ResultSequence constructor(ResultSequence arg) throws DynamicError {
@@ -146,7 +145,6 @@ public class XSBoolean extends CtrType implements CmpEq, CmpGt, CmpLt {
 	 * @param arg
 	 *            The XSBoolean representation of the boolean value to compare
 	 *            with.
-	 * @throws DynamicError
 	 * @return New XSBoolean representation of true/false result of the equality
 	 *         comparison
 	 */
@@ -165,7 +163,6 @@ public class XSBoolean extends CtrType implements CmpEq, CmpGt, CmpLt {
 	 * @param arg
 	 *            The XSBoolean representation of the boolean value to compare
 	 *            with.
-	 * @throws DynamicError
 	 * @return New XSBoolean representation of true/false result of the
 	 *         comparison
 	 */
@@ -188,7 +185,6 @@ public class XSBoolean extends CtrType implements CmpEq, CmpGt, CmpLt {
 	 * @param arg
 	 *            The XSBoolean representation of the boolean value to compare
 	 *            with.
-	 * @throws DynamicError
 	 * @return New XSBoolean representation of true/false result of the
 	 *         comparison
 	 */
