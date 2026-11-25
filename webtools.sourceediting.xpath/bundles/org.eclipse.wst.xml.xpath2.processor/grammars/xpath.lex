@@ -17,11 +17,16 @@
 
 package org.eclipse.wst.xml.xpath2.processor.internal;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 import org.eclipse.wst.xml.xpath2.processor.internal.cup.*;
 
 %%
 
 %class XPathFlex
+%public
+%cupsym XpathSym
 %unicode
 %cup
 %line

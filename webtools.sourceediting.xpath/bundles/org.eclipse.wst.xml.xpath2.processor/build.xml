@@ -31,7 +31,7 @@
 
 	<target name="generate_parser" depends="download_tools">
 		<taskdef classname="JFlex.anttask.JFlexTask" name="jflex" classpath="${jflexJar}" />
-		<jflex file="grammars/xpath.lex" destdir="grammars/generated"/>
+		<jflex file="grammars/xpath.lex" destdir="${basedir}/src"/>
 		<!-- the jar on Maven Central has no Main-Class -->
 	    <java classname="java_cup.Main" classpath="${cupJar}" input="grammars/xpath.cup" output="${basedir}/JavaCUP-dump.txt" fork="true" failonerror="true">
 	    	<arg value="-parser"/>
@@ -46,8 +46,8 @@
 		<move tofile="${basedir}/src/org/eclipse/wst/xml/xpath2/processor/internal/XpathSym.java" file="XpathSym.java"/>
 		<!-- the CUP runtime is included in the processor -->
 		<replace token="java_cup.runtime" value="org.eclipse.wst.xml.xpath2.processor.internal.cup">
-			<fileset dir="grammars/generated" includes="**/*.java"/>
 			<fileset file="${basedir}/src/org/eclipse/wst/xml/xpath2/processor/internal/XPathCup.java"/>
+			<fileset file="${basedir}/src/org/eclipse/wst/xml/xpath2/processor/internal/XPathFlex.java"/>
 		</replace>
 	</target>
 
