@@ -7,6 +7,7 @@
     ant test -Dtest.jvm=/path/to/another/jdk/bin/java
     ant jar
     ant jar -Dversion=1.2.2
+    ant client
 -->
 <project name="xpath20" default="test" basedir="." xmlns:unless="ant:unless">
 
@@ -24,6 +25,8 @@
     <property name="tests.classes" location="${build.dir}/classes/tests"/>
     <property name="reports.dir" location="${build.dir}/test-reports"/>
     <property name="dist.dir" location="${build.dir}/dist"/>
+    <property name="client.dir" location="xpath2client"/>
+    <property name="client.classes" location="${build.dir}/classes/client"/>
     <!-- the name used by Xerces-J -->
     <property name="jar.name" value="org.eclipse.wst.xml.xpath2.processor_${version}"/>
 
@@ -48,6 +51,11 @@
         <pathelement location="${lib.dir}/hamcrest-core.jar"/>
         <!-- used to serialize the results that are compared with the expected ones -->
         <pathelement location="${lib.dir}/serializer.jar"/>
+    </path>
+
+    <path id="client.classpath">
+        <pathelement location="${engine.classes}"/>
+        <path refid="engine.classpath"/>
     </path>
 
     <target name="clean">
@@ -137,6 +145,20 @@
         <dist-jar destfile="${dist.dir}/${jar.name}-sources.jar">
             <fileset dir="${engine.dir}/src" excludes="**/XPath2Plugin.java"/>
         </dist-jar>
+    </target>
+
+    <!-- compiles and runs the sample client -->
+    <target name="client" depends="compile">
+        <mkdir dir="${client.classes}"/>
+        <javac srcdir="${client.dir}/src" destdir="${client.classes}" classpathref="client.classpath"
+               source="${javac.source}" target="${javac.target}"
+               includeantruntime="false" nowarn="true" debug="true"/>
+        <java classname="org.eclipse.wst.xml.xpath2.client.XPathClient" fork="true" dir="${client.dir}" failonerror="true">
+            <classpath>
+                <pathelement location="${client.classes}"/>
+                <path refid="client.classpath"/>
+            </classpath>
+        </java>
     </target>
 
     <target name="compile-tests" depends="compile,download-libs">

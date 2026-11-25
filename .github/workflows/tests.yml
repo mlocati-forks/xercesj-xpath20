@@ -39,6 +39,9 @@ jobs:
           name: test-reports-java-${{ matrix.java }}
           path: build/test-reports
       # every job compiles with Java 8, so one is enough
+      - name: Run the sample client
+        if: ${{ matrix.java == '8' }}
+        run: ant -noinput client
       - name: Build the jars
         if: ${{ matrix.java == '8' }}
         run: ant -noinput jar
