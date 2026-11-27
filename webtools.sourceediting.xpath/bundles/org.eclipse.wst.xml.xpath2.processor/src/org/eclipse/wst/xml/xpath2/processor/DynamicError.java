@@ -169,8 +169,6 @@ public class DynamicError extends XPathException {
 	
 	/**
 	 * Returns the Dynamic Error for invalid flags in regular expressions
-	 * @param err
-	 * @return
 	 * @since 1.1
 	 */
 	public static DynamicError regex_flags_error(String err) {
@@ -372,8 +370,6 @@ public class DynamicError extends XPathException {
 	/**
 	 * Returns the error message when reads Invalid argument to fn:collection
 	 * 
-	 * @param msg
-	 *            is the message
 	 * @return the make_error
 	 * @since 1.1
 	 */
@@ -435,7 +431,6 @@ public class DynamicError extends XPathException {
 
 	/**
 	 * Data is invalid for casting or the data type constructor.
-	 * @param msg
 	 * @return FORG0001
 	 * @since 1.1
 	 */
@@ -449,7 +444,6 @@ public class DynamicError extends XPathException {
 	/**
 	 * No namespace found for prefix.
 	 * 
-	 * @return
 	 * @since 1.1
 	 */
 	public static DynamicError invalidPrefix() {
@@ -458,7 +452,6 @@ public class DynamicError extends XPathException {
 	
 	/**
 	 * No context document
-	 * @return
 	 * @since 1.1
 	 */
 	public static DynamicError noContextDoc() {
@@ -468,7 +461,6 @@ public class DynamicError extends XPathException {
 	/**
 	 * No base-uri defined.
 	 * 
-	 * @return
 	 * @since 1.1
 	 */
 	public static DynamicError noBaseURI() {
@@ -478,7 +470,6 @@ public class DynamicError extends XPathException {
 	/**
 	 * Error resolving relative uri against base-uri.
 	 * 
-	 * @return
 	 * @since 1.1
 	 */
 	public static DynamicError errorResolvingURI() {
@@ -487,7 +478,6 @@ public class DynamicError extends XPathException {
 	
 	/**
 	 * Invalid Timezone value.
-	 * @return
 	 * @since 1.1
 	 */
 	public static DynamicError invalidTimezone() {
@@ -496,7 +486,6 @@ public class DynamicError extends XPathException {
 	
 	/**
 	 * Overflow/underflow in duration operation.
-	 * @return
 	 * @since 1.1
 	 */
 	public static DynamicError overflowUnderflow() {
@@ -505,7 +494,6 @@ public class DynamicError extends XPathException {
 	
 	/**
 	 * Overflow/underflow in duration operation.
-	 * @return
 	 * @since 1.1
 	 */
 	public static DynamicError nan() {

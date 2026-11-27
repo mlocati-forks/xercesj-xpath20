@@ -30,8 +30,6 @@ public class PIType extends NodeType {
 	 * 
 	 * @param v
 	 *            The processing instruction this node represents
-	 * @param doc_order
-	 *            The document order
 	 */
 	public PIType(ProcessingInstruction v) {
 		super(v);

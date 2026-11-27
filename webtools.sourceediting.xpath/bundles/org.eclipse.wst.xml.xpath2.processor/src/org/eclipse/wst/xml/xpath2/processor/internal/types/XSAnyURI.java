@@ -86,7 +86,6 @@ public class XSAnyURI extends CtrType implements CmpEq, CmpGt, CmpLt {
 	 * 
 	 * @param arg
 	 *            previous result sequence
-	 * @throws DynamicError
 	 * @return new result sequence consisting of the URI supplied
 	 */
 	public ResultSequence constructor(ResultSequence arg) throws DynamicError {
@@ -116,7 +115,6 @@ public class XSAnyURI extends CtrType implements CmpEq, CmpGt, CmpLt {
 	 *            The representation to compare with
 	 * @return True if the two representation are of the same String. False
 	 *         otherwise
-	 * @throws DynamicError
 	 */
 	public boolean eq(AnyType arg, DynamicContext context) throws DynamicError {
 		if (arg instanceof XSAnyURI || arg instanceof XSString) {

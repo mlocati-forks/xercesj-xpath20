@@ -5,8 +5,14 @@
   Usage:
     ant test
     ant test -Dtest.jvm=/path/to/another/jdk/bin/java
+    ant jar
+    ant jar -Dversion=1.2.2
+    ant client
+    ant maven-bundle -Dversion=1.2.2 -Dmaven.groupId=... -Dmaven.artifactId=...    (see RELEASING.md)
 -->
-<project name="xpath20" default="test" basedir=".">
+<project name="xpath20" default="test" basedir="." xmlns:if="ant:if" xmlns:unless="ant:unless">
+
+    <property name="version" value="1.2.2-SNAPSHOT"/>
 
     <property name="engine.dir" location="webtools.sourceediting.xpath/bundles/org.eclipse.wst.xml.xpath2.processor"/>
     <property name="tests.dir" location="webtools.sourceediting.xpath.tests/tests/org.eclipse.wst.xml.xpath2.processor.tests"/>
@@ -19,6 +25,13 @@
     <property name="engine.classes" location="${build.dir}/classes/engine"/>
     <property name="tests.classes" location="${build.dir}/classes/tests"/>
     <property name="reports.dir" location="${build.dir}/test-reports"/>
+    <property name="javadoc.dir" location="${build.dir}/javadoc"/>
+    <property name="dist.dir" location="${build.dir}/dist"/>
+    <property name="maven.dir" location="${build.dir}/maven"/>
+    <property name="client.dir" location="xpath2client"/>
+    <property name="client.classes" location="${build.dir}/classes/client"/>
+    <!-- the name used by Xerces-J -->
+    <property name="jar.name" value="org.eclipse.wst.xml.xpath2.processor_${version}"/>
 
     <!-- some sources contain ISO-8859-1 characters -->
     <property name="javac.encoding" value="ISO-8859-1"/>
@@ -31,8 +44,6 @@
     <path id="engine.classpath">
         <pathelement location="org.apache.xerces/lib/xercesImpl.jar"/>
         <pathelement location="org.apache.xerces/lib/xml-apis.jar"/>
-        <pathelement location="xpath2client/lib/cupv10k-runtime.jar"/>
-        <pathelement location="xpath2client/lib/icu4j.jar"/>
     </path>
 
     <path id="tests.classpath">
@@ -43,6 +54,11 @@
         <pathelement location="${lib.dir}/hamcrest-core.jar"/>
         <!-- used to serialize the results that are compared with the expected ones -->
         <pathelement location="${lib.dir}/serializer.jar"/>
+    </path>
+
+    <path id="client.classpath">
+        <pathelement location="${engine.classes}"/>
+        <path refid="engine.classpath"/>
     </path>
 
     <target name="clean">
@@ -64,6 +80,159 @@
             <!-- the Eclipse plug-in activator -->
             <exclude name="**/XPath2Plugin.java"/>
         </javac>
+    </target>
+
+    <macrodef name="dist-jar">
+        <attribute name="destfile"/>
+        <element name="contents" implicit="true"/>
+        <sequential>
+            <jar destfile="@{destfile}" modificationtime="${jar.timestamp}">
+                <contents/>
+                <fileset file="${engine.dir}/about.html"/>
+                <manifest>
+                    <!-- instead of the exact JDK build -->
+                    <attribute name="Created-By" value="${java.specification.version}"/>
+                    <attribute name="Implementation-Title" value="XPath 2.0 Processor"/>
+                    <attribute name="Implementation-Version" value="${version}"/>
+                </manifest>
+            </jar>
+            <checksum file="@{destfile}" algorithm="SHA-512" fileext=".sha512" pattern="{0}  {1}"/>
+        </sequential>
+    </macrodef>
+
+    <!-- the date of the files in the jars: a fixed one makes the jars reproducible -->
+    <target name="-jar-timestamp">
+        <property environment="env"/>
+        <condition property="source.date.epoch.set">
+            <and>
+                <isset property="env.SOURCE_DATE_EPOCH"/>
+                <length string="${env.SOURCE_DATE_EPOCH}" when="greater" length="0"/>
+            </and>
+        </condition>
+        <fail message="SOURCE_DATE_EPOCH must be a number of seconds, not ${env.SOURCE_DATE_EPOCH}">
+            <condition>
+                <and>
+                    <isset property="source.date.epoch.set"/>
+                    <not>
+                        <matches string="${env.SOURCE_DATE_EPOCH}" pattern="^[0-9]+$"/>
+                    </not>
+                </and>
+            </condition>
+        </fail>
+        <condition property="jar.timestamp" value="${env.SOURCE_DATE_EPOCH}000">
+            <isset property="source.date.epoch.set"/>
+        </condition>
+        <exec executable="git" outputproperty="git.timestamp" errorproperty="git.error" resultproperty="git.result" failifexecutionfails="false" unless:set="jar.timestamp">
+            <arg value="log"/>
+            <arg value="-1"/>
+            <arg value="--format=%ct000"/>
+        </exec>
+        <property name="git.error" value="git not found"/>
+        <condition property="jar.timestamp" value="${git.timestamp}">
+            <equals arg1="${git.result}" arg2="0"/>
+        </condition>
+        <fail unless="jar.timestamp" message="Set SOURCE_DATE_EPOCH, or build from a git repository (git failed: ${git.error})"/>
+    </target>
+
+    <!-- so that the jar doesn't contain stale classes -->
+    <target name="-clean-engine">
+        <delete dir="${engine.classes}"/>
+    </target>
+
+    <target name="jar" depends="-jar-timestamp,-clean-engine,compile">
+        <delete dir="${dist.dir}"/>
+        <mkdir dir="${dist.dir}"/>
+        <dist-jar destfile="${dist.dir}/${jar.name}.jar">
+            <fileset dir="${engine.classes}"/>
+        </dist-jar>
+        <dist-jar destfile="${dist.dir}/${jar.name}-sources.jar">
+            <fileset dir="${engine.dir}/src" excludes="**/XPath2Plugin.java"/>
+        </dist-jar>
+        <delete dir="${javadoc.dir}"/>
+        <!-- -missing: many classes and methods have no comments -->
+        <!-- en_US: otherwise the language of the pages depends on the system -->
+        <javadoc destdir="${javadoc.dir}" classpathref="engine.classpath" locale="en_US"
+                 encoding="${javac.encoding}" docencoding="UTF-8" charset="UTF-8" source="${javac.source}"
+                 additionalparam="-Xdoclint:all,-missing -notimestamp -quiet" failonerror="true"
+                 windowtitle="XPath 2.0 Processor ${version}">
+            <fileset dir="${engine.dir}/src" includes="**/*.java" excludes="**/XPath2Plugin.java"/>
+        </javadoc>
+        <dist-jar destfile="${dist.dir}/${jar.name}-javadoc.jar">
+            <fileset dir="${javadoc.dir}"/>
+        </dist-jar>
+    </target>
+
+    <!-- so that the jars of a release are the same as the ones built by the CI -->
+    <target name="-check-reproducible">
+        <!-- the jars store the dates in the time zone of the JVM -->
+        <fail message="The time zone must be UTC: set ANT_OPTS=-Duser.timezone=UTC">
+            <condition>
+                <not>
+                    <equals arg1="${user.timezone}" arg2="UTC"/>
+                </not>
+            </condition>
+        </fail>
+    </target>
+
+    <!-- the bundle to upload to the Central Portal: signed jars, POM and checksums in the Maven layout -->
+    <target name="maven-bundle" depends="-check-reproducible,jar">
+        <fail unless="maven.groupId" message="Set maven.groupId"/>
+        <fail unless="maven.artifactId" message="Set maven.artifactId"/>
+        <fail message="Maven Central doesn't accept SNAPSHOT versions: set one with -Dversion=...">
+            <condition>
+                <contains string="${version}" substring="SNAPSHOT"/>
+            </condition>
+        </fail>
+        <loadresource property="maven.groupPath">
+            <propertyresource name="maven.groupId"/>
+            <filterchain>
+                <tokenfilter>
+                    <replacestring from="." to="/"/>
+                </tokenfilter>
+            </filterchain>
+        </loadresource>
+        <property name="maven.name" value="${maven.artifactId}-${version}"/>
+        <property name="maven.files" location="${maven.dir}/${maven.groupPath}/${maven.artifactId}/${version}"/>
+        <delete dir="${maven.dir}"/>
+        <mkdir dir="${maven.files}"/>
+        <copy file="${dist.dir}/${jar.name}.jar" tofile="${maven.files}/${maven.name}.jar"/>
+        <copy file="${dist.dir}/${jar.name}-sources.jar" tofile="${maven.files}/${maven.name}-sources.jar"/>
+        <copy file="${dist.dir}/${jar.name}-javadoc.jar" tofile="${maven.files}/${maven.name}-javadoc.jar"/>
+        <copy file="pom.template.xml" tofile="${maven.files}/${maven.name}.pom">
+            <filterchain>
+                <expandproperties/>
+            </filterchain>
+        </copy>
+        <!-- without gpg.keyname, gpg uses its default key -->
+        <apply executable="gpg" dir="${maven.files}" failonerror="true">
+            <arg value="--local-user" if:set="gpg.keyname"/>
+            <arg value="${gpg.keyname}" if:set="gpg.keyname"/>
+            <arg value="--armor"/>
+            <arg value="--detach-sign"/>
+            <srcfile/>
+            <fileset dir="${maven.files}" includes="*.jar,*.pom"/>
+        </apply>
+        <checksum algorithm="MD5" fileext=".md5">
+            <fileset dir="${maven.files}" includes="*.jar,*.pom"/>
+        </checksum>
+        <checksum algorithm="SHA-1" fileext=".sha1">
+            <fileset dir="${maven.files}" includes="*.jar,*.pom"/>
+        </checksum>
+        <zip destfile="${dist.dir}/${maven.name}-bundle.zip" basedir="${maven.dir}"/>
+    </target>
+
+    <!-- compiles and runs the sample client -->
+    <target name="client" depends="compile">
+        <mkdir dir="${client.classes}"/>
+        <javac srcdir="${client.dir}/src" destdir="${client.classes}" classpathref="client.classpath"
+               source="${javac.source}" target="${javac.target}"
+               includeantruntime="false" nowarn="true" debug="true"/>
+        <java classname="org.eclipse.wst.xml.xpath2.client.XPathClient" fork="true" dir="${client.dir}" failonerror="true">
+            <classpath>
+                <pathelement location="${client.classes}"/>
+                <path refid="client.classpath"/>
+            </classpath>
+        </java>
     </target>
 
     <target name="compile-tests" depends="compile,download-libs">

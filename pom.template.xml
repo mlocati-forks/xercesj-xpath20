@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- the POM published on Maven Central: the maven-bundle target of build.xml fills in the Ant properties -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>${maven.groupId}</groupId>
+  <artifactId>${maven.artifactId}</artifactId>
+  <version>${version}</version>
+  <packaging>jar</packaging>
+
+  <name>XPath 2.0 Processor</name>
+  <description>An XPath 2.0 processor that requires Apache Xerces-J, and is used by its XML Schema 1.1 processor. It is derived from the PsychoPath processor of Eclipse WTP.</description>
+  <url>https://github.com/xercesj/xpath20</url>
+
+  <licenses>
+    <license>
+      <name>Eclipse Public License 2.0</name>
+      <url>https://www.eclipse.org/legal/epl-2.0/</url>
+    </license>
+    <license>
+      <name>CUP Parser Generator License</name>
+      <url>https://github.com/xercesj/xpath20/blob/master/LICENSE.cupv10k-runtime.txt</url>
+      <comments>The runtime of CUP 0.10k, in the org.eclipse.wst.xml.xpath2.processor.internal.cup package</comments>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <name>Mukul Gandhi</name>
+      <url>https://github.com/mukulgandhi</url>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:https://github.com/xercesj/xpath20.git</connection>
+    <developerConnection>scm:git:https://github.com/xercesj/xpath20.git</developerConnection>
+    <url>https://github.com/xercesj/xpath20</url>
+  </scm>
+</project>

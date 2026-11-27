@@ -65,7 +65,6 @@ public class XSByte extends XSShort {
 	 * @param arg
 	 *            The ResultSequence from which the byte is to be extracted
 	 * @return New ResultSequence consisting of the 'byte' supplied
-	 * @throws DynamicError
 	 */
 	public ResultSequence constructor(ResultSequence arg) throws DynamicError {
 		ResultSequence rs = ResultSequenceFactory.create_new();

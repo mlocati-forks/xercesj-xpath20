@@ -66,7 +66,6 @@ public class XSName extends XSToken {
 	 * @param arg
 	 *            The ResultSequence from which to extract the Name
 	 * @return New ResultSequence consisting of the Name supplied
-	 * @throws DynamicError
 	 */
 	public ResultSequence constructor(ResultSequence arg) throws DynamicError {
 		ResultSequence rs = ResultSequenceFactory.create_new();

@@ -90,7 +90,6 @@ public class XSDayTimeDuration extends XSDuration implements CmpEq, CmpLt,
 	 * Creates a copy of this representation of a time duration
 	 * 
 	 * @return New XSDayTimeDuration representing the duration of time stored
-	 * @throws CloneNotSupportedException
 	 */
 	public Object clone() throws CloneNotSupportedException {
 		return new XSDayTimeDuration(days(), hours(), minutes(), seconds(),
@@ -256,7 +255,6 @@ public class XSDayTimeDuration extends XSDuration implements CmpEq, CmpLt,
 	 *            The duration of time to add
 	 * @return New XSDayTimeDuration representing the resulting duration after
 	 *         the addition
-	 * @throws DynamicError
 	 */
 	public ResultSequence plus(ResultSequence arg) throws DynamicError {
 		XSDuration val = (XSDuration) NumericType
@@ -275,7 +273,6 @@ public class XSDayTimeDuration extends XSDuration implements CmpEq, CmpLt,
 	 *            The duration of time to subtract
 	 * @return New XSDayTimeDuration representing the resulting duration after
 	 *         the subtraction
-	 * @throws DynamicError
 	 */
 	public ResultSequence minus(ResultSequence arg) throws DynamicError {
 		XSDuration val = (XSDuration) NumericType
@@ -294,7 +291,6 @@ public class XSDayTimeDuration extends XSDuration implements CmpEq, CmpLt,
 	 *            The duration of time to multiply by
 	 * @return New XSDayTimeDuration representing the resulting duration after
 	 *         the multiplication
-	 * @throws DynamicError
 	 */
 	public ResultSequence times(ResultSequence arg) throws DynamicError {
 		ResultSequence convertedRS = arg;
@@ -325,7 +321,6 @@ public class XSDayTimeDuration extends XSDuration implements CmpEq, CmpLt,
 	 *            The duration of time to divide by
 	 * @return New XSDayTimeDuration representing the resulting duration after
 	 *         the division
-	 * @throws DynamicError
 	 */
 	public ResultSequence div(ResultSequence arg) throws DynamicError {
 		if (arg.size() != 1)

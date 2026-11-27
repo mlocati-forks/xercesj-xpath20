@@ -162,7 +162,6 @@ public interface DynamicContext extends StaticContext {
 	/**
 	 * Return a useful collator for the specified URI
 	 * 
-	 * @param uri
 	 * @return A Jaa collator, or null, if no such Collator exists 
 	 * @since 1.1
 	 */
@@ -185,7 +184,6 @@ public interface DynamicContext extends StaticContext {
 	/**
 	 * Set root node of an XDM tree
 	 * 
-	 * @param rootNode
 	 */
 	public void setRootNode(Node rootNode);
 	

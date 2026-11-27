@@ -30,7 +30,7 @@ public class PrecedingAxis extends ReverseAxis {
 	 * 
 	 * @param node
 	 *            is the node type.
-	 * @throws dc
+	 * @param dc
 	 *             is the Dynamic context.
 	 * @return the descendants of the context node
 	 */

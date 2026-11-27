@@ -29,7 +29,7 @@ public class PrecedingSiblingAxis extends ReverseAxis {
 	 * 
 	 * @param node
 	 *            is the node type.
-	 * @throws dc
+	 * @param dc
 	 *             is the Dynamic context.
 	 * @return the descendants and the context node
 	 */

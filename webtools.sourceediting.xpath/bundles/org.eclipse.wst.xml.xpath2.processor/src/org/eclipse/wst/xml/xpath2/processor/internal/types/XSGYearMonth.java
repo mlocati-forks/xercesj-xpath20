@@ -113,7 +113,6 @@ public class XSGYearMonth extends CalendarType implements CmpEq {
 	 *            The ResultSequence from which the gYearMonth is to be
 	 *            extracted
 	 * @return New ResultSequence consisting of the supplied year and month
-	 * @throws DynamicError
 	 */
 	public ResultSequence constructor(ResultSequence arg) throws DynamicError {
 		ResultSequence rs = ResultSequenceFactory.create_new();
@@ -296,7 +295,6 @@ public class XSGYearMonth extends CalendarType implements CmpEq {
 	 *            The XSGYearMonth to compare with
 	 * @return True if the two representations are of the same year and month.
 	 *         False otherwise
-	 * @throws DynamicError
 	 */
 	public boolean eq(AnyType arg, DynamicContext context) throws DynamicError {
 		XSGYearMonth val = (XSGYearMonth) NumericType.get_single_type(arg,

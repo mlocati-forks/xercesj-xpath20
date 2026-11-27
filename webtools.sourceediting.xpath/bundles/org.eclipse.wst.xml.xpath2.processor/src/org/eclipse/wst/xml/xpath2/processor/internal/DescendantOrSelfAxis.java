@@ -33,7 +33,6 @@ public class DescendantOrSelfAxis extends ForwardAxis {
 	 *            is the type of node.
 	 * @param dc
 	 *            is the dynamic context.
-	 * @destination The context node and its descendants.
 	 */
 	protected void collect(NodeType node, DynamicContext dc,
 			ListIterator destination) {

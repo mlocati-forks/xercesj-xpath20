@@ -21,7 +21,8 @@ public interface StaticChecker {
 	/**
 	 * checks XPathNode
 	 * 
-	 * @throws static error.
+	 * @throws StaticError
+	 *             static error.
 	 * @param root
 	 *            is an XPath node.
 	 */

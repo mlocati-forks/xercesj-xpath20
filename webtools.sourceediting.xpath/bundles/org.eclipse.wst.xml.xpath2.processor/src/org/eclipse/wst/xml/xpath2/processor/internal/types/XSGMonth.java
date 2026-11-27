@@ -136,7 +136,6 @@ public class XSGMonth extends CalendarType implements CmpEq {
 	 * @param arg
 	 *            The ResultSequence from which the gMonth is to be extracted
 	 * @return New ResultSequence consisting of the supplied month
-	 * @throws DynamicError
 	 */
 	public ResultSequence constructor(ResultSequence arg) throws DynamicError {
 		ResultSequence rs = ResultSequenceFactory.create_new();
@@ -294,7 +293,6 @@ public class XSGMonth extends CalendarType implements CmpEq {
 	 *            The XSGMonth to compare with
 	 * @return True if the two representations are of the same month. False
 	 *         otherwise
-	 * @throws DynamicError
 	 */
 	public boolean eq(AnyType arg, DynamicContext context) throws DynamicError {
 		XSGMonth val = (XSGMonth) NumericType.get_single_type(arg,

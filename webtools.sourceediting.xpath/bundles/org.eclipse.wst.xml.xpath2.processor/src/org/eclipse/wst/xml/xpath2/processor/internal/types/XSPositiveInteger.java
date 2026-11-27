@@ -66,7 +66,6 @@ public class XSPositiveInteger extends XSNonNegativeInteger {
 	 * @param arg
 	 *            The ResultSequence from which the positiveInteger is to be extracted
 	 * @return New ResultSequence consisting of the 'positiveInteger' supplied
-	 * @throws DynamicError
 	 */
 	public ResultSequence constructor(ResultSequence arg) throws DynamicError {
 		ResultSequence rs = ResultSequenceFactory.create_new();

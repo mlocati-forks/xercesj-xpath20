@@ -66,7 +66,6 @@ public class XSNCName extends XSName {
 	 * @param arg
 	 *            The ResultSequence from which to extract the NCName
 	 * @return New ResultSequence consisting of the NCName supplied
-	 * @throws DynamicError
 	 */
 	public ResultSequence constructor(ResultSequence arg) throws DynamicError {
 		ResultSequence rs = ResultSequenceFactory.create_new();

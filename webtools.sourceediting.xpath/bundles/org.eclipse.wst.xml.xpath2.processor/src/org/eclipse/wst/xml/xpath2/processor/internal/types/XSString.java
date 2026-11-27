@@ -96,7 +96,6 @@ public class XSString extends CtrType implements CmpEq, CmpGt, CmpLt {
 	 * @param arg
 	 *            The ResultSequence from which to extract the String
 	 * @return New ResultSequence consisting of the supplied String
-	 * @throws DynamicError
 	 */
 	public ResultSequence constructor(ResultSequence arg) throws DynamicError {
 		ResultSequence rs = ResultSequenceFactory.create_new();
@@ -135,7 +134,6 @@ public class XSString extends CtrType implements CmpEq, CmpGt, CmpLt {
 	 *            The representation to compare with
 	 * @return True if the two representation are of the same String. False
 	 *         otherwise
-	 * @throws DynamicError
 	 */
 	public boolean eq(AnyType arg, DynamicContext context) throws DynamicError {
 		if (arg instanceof XSDecimal) {
@@ -159,7 +157,6 @@ public class XSString extends CtrType implements CmpEq, CmpGt, CmpLt {
 	 *            The representation to compare with
 	 * @return True if this String is lexographically greater than that
 	 *         supplied. False otherwise
-	 * @throws DynamicError
 	 */
 	public boolean gt(AnyType arg, DynamicContext context) throws DynamicError {
 		int cmp = do_compare(arg, context);
@@ -177,7 +174,6 @@ public class XSString extends CtrType implements CmpEq, CmpGt, CmpLt {
 	 *            The representation to compare with
 	 * @return True if this String is lexographically less than that supplied.
 	 *         False otherwise
-	 * @throws DynamicError
 	 */
 	public boolean lt(AnyType arg, DynamicContext context) throws DynamicError {
 		int cmp = do_compare(arg, context);

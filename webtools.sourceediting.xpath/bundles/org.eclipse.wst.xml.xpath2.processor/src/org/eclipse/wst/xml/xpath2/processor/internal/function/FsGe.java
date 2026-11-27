@@ -54,7 +54,6 @@ public class FsGe extends Function {
 	 * 
 	 * @param args
 	 *            input arguments.
-	 * @param dc 
 	 * @throws DynamicError
 	 *             Dynamic error.
 	 * @return Result of the operation.

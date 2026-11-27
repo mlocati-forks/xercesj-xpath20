@@ -28,7 +28,6 @@ import org.eclipse.wst.xml.xpath2.processor.internal.types.QName;
 import org.eclipse.wst.xml.xpath2.processor.internal.types.XSInteger;
 import org.eclipse.wst.xml.xpath2.processor.internal.types.XSString;
 
-import com.ibm.icu.text.UTF16;
 
 /**
  * Creates an xs:string from a sequence of code points. Returns the zero-length
@@ -105,7 +104,7 @@ public class FnCodepointsToString extends Function {
 		}
 
 		try {
-			String str = UTF16.newString(codePointArray, 0, codePointArray.length);
+			String str = new String(codePointArray, 0, codePointArray.length);
 			rs.add(new XSString(str));
 		} catch (IllegalArgumentException iae) {
 			// This should be duoble checked above, but rather safe than sorry

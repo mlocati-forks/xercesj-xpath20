@@ -65,7 +65,6 @@ public class XSNormalizedString extends XSString {
 	 * @param arg
 	 *            The ResultSequence from which to extract the String
 	 * @return New ResultSequence consisting of the supplied String
-	 * @throws DynamicError
 	 */
 	public ResultSequence constructor(ResultSequence arg) throws DynamicError {
 		ResultSequence rs = ResultSequenceFactory.create_new();

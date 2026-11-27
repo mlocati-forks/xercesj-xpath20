@@ -92,7 +92,7 @@ public class DefaultDynamicContext extends DefaultStaticContext implements
 	/**
 	 * Gets the Current stable date time from the dynamic context.
 	 * @since 1.1
-	 * @see org.eclipse.wst.xml.xpath2.processor.DynamicContext#get_current_time()
+	 * @see org.eclipse.wst.xml.xpath2.processor.DynamicContext#current_date_time()
 	 */
 	public GregorianCalendar current_date_time() {
 		if (_current_date_time == null) {
@@ -114,7 +114,6 @@ public class DefaultDynamicContext extends DefaultStaticContext implements
 	/**
 	 * Set root node of an XDM tree
 	 * 
-	 * @param rootNode
 	 */
 	public void setRootNode(Node rootNode) {
 		_rootNode = rootNode;
@@ -319,7 +318,6 @@ public class DefaultDynamicContext extends DefaultStaticContext implements
 	/**
 	 * 
 	 * 
-	 * @param provider
 	 * @since 1.1
 	 */
 	public void set_collation_provider(CollationProvider provider) {

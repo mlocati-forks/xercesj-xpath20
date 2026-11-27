@@ -107,7 +107,6 @@ public class XSInteger extends XSDecimal {
 	 * @param arg
 	 *            The ResultSequence from which the integer is to be extracted
 	 * @return New ResultSequence consisting of the integer supplied
-	 * @throws DynamicError
 	 */
 	public ResultSequence constructor(ResultSequence arg) throws DynamicError {
 		ResultSequence rs = ResultSequenceFactory.create_new();

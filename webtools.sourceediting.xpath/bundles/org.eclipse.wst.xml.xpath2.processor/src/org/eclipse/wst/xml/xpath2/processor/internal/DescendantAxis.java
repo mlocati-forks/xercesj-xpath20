@@ -32,7 +32,6 @@ public class DescendantAxis extends ChildAxis {
 	 *            is the type of node.
 	 * @param dc
 	 *            is the dynamic context.
-	 * @return The descendants of the context node.
 	 */
 	protected void collect(NodeType node, DynamicContext dc,
 			ListIterator destination) {

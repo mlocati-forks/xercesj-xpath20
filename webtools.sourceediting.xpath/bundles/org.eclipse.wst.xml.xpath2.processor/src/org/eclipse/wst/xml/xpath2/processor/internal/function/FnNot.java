@@ -41,7 +41,6 @@ public class FnNot extends Function {
 	 * @param args
 	 *            argument expressions.
 	 * @return Result of evaluation.
-	 * @throws DynamicError 
 	 */
 	public ResultSequence evaluate(Collection args) throws DynamicError {
 		// 1 argument only!
@@ -58,7 +57,6 @@ public class FnNot extends Function {
 	 * @param arg
 	 *            Result from the expressions evaluation.
 	 * @return Result of fn:note operation.
-	 * @throws DynamicError 
 	 */
 	public static ResultSequence fn_not(ResultSequence arg) throws DynamicError {
 		XSBoolean ret = FnBoolean.fn_boolean(arg);

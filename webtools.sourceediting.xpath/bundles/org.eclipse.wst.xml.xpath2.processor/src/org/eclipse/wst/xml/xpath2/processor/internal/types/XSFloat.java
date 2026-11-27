@@ -152,7 +152,6 @@ public class XSFloat extends NumericType {
 	 * @param arg
 	 *            The ResultSequence from which to extract the float
 	 * @return New ResultSequence consisting of the float supplied
-	 * @throws DynamicError
 	 */
 	public ResultSequence constructor(ResultSequence arg) throws DynamicError {
 		ResultSequence rs = ResultSequenceFactory.create_new();
@@ -215,7 +214,6 @@ public class XSFloat extends NumericType {
 	 * 
 	 * @return True if the two representations are of the same number. False
 	 *         otherwise
-	 * @throws DynamicError
 	 */
 	public boolean eq(AnyType aa, DynamicContext context) throws DynamicError {
 		AnyType carg = convertArg(aa);
@@ -247,7 +245,6 @@ public class XSFloat extends NumericType {
 	 *            The datatype to compare with
 	 * @return True if the supplied representation is a smaller number than the
 	 *         one stored. False otherwise
-	 * @throws DynamicError
 	 */
 	public boolean gt(AnyType arg, DynamicContext context) throws DynamicError {
 		AnyType carg = convertArg(arg);
@@ -262,7 +259,6 @@ public class XSFloat extends NumericType {
 	 *            The datatype to compare with
 	 * @return True if the supplied representation is a greater number than the
 	 *         one stored. False otherwise
-	 * @throws DynamicError
 	 */
 	public boolean lt(AnyType arg, DynamicContext context) throws DynamicError {
 		AnyType carg = convertArg(arg);

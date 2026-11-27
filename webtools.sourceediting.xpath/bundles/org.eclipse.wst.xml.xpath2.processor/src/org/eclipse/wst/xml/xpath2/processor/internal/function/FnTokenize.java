@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.wst.xml.xpath2.processor.DynamicError;
 import org.eclipse.wst.xml.xpath2.processor.ResultSequence;
@@ -26,8 +28,6 @@ import org.eclipse.wst.xml.xpath2.processor.ResultSequenceFactory;
 import org.eclipse.wst.xml.xpath2.processor.internal.SeqType;
 import org.eclipse.wst.xml.xpath2.processor.internal.types.QName;
 import org.eclipse.wst.xml.xpath2.processor.internal.types.XSString;
-import org.eclipse.wst.xml.xpath2.processor.regex.Matcher;
-import org.eclipse.wst.xml.xpath2.processor.regex.PatternSyntaxException;
 
 /**
  * This function breaks the $input string into a sequence of strings, treating
@@ -99,8 +99,7 @@ public class FnTokenize extends AbstractRegExFunction {
 		}
 
 		try {
-			List ret = tokenize(trfPatternStrForSubtraction(pattern), flags, 
-					                                             str1);
+			List ret = tokenize(pattern, flags, str1);
 
 			for (Iterator retIter = ret.iterator(); retIter.hasNext();) {
 			   rs.add(new XSString((String)retIter.next()));	

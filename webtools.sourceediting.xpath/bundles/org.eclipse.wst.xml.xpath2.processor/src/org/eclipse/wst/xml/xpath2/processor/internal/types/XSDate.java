@@ -148,7 +148,6 @@ Cloneable {
 	 * 
 	 * @param arg
 	 *            The result sequence from which to extract the date value.
-	 * @throws DynamicError
 	 * @return A new result sequence consisting of the date value supplied.
 	 */
 	public ResultSequence constructor(ResultSequence arg) throws DynamicError {
@@ -333,7 +332,6 @@ Cloneable {
 	 * 
 	 * @param arg
 	 *            XSDate representation of the date to compare to
-	 * @throws DynamicError
 	 * @return True if the two dates are represent the same exact point in time.
 	 *         False otherwise.
 	 */
@@ -350,7 +348,6 @@ Cloneable {
 	 * 
 	 * @param arg
 	 *            XSDate representation of the date to compare to
-	 * @throws DynamicError
 	 * @return True if in time, this date lies before the date supplied. False
 	 *         otherwise.
 	 */
@@ -367,7 +364,6 @@ Cloneable {
 	 * 
 	 * @param arg
 	 *            XSDate representation of the date to compare to
-	 * @throws DynamicError
 	 * @return True if in time, this date lies after the date supplied. False
 	 *         otherwise.
 	 */

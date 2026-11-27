@@ -79,7 +79,6 @@ Cloneable {
 	 * Creates a new copy of the time (and timezone) stored
 	 * 
 	 * @return New XSTime representing the copy of the time and timezone
-	 * @throws CloneNotSupportedException
 	 */
 	public Object clone() throws CloneNotSupportedException {
 		Calendar c = (Calendar) calendar().clone();
@@ -125,7 +124,6 @@ Cloneable {
 	 * @param arg
 	 *            The ResultSequence from which to extract the time
 	 * @return New ResultSequence consisting of the supplied time
-	 * @throws DynamicError
 	 */
 	public ResultSequence constructor(ResultSequence arg) throws DynamicError {
 		ResultSequence rs = ResultSequenceFactory.create_new();
@@ -317,7 +315,6 @@ Cloneable {
 	 * @param arg
 	 *            The XSTime to compare with
 	 * @return True if both XSTime's represent the same time. False otherwise
-	 * @throws DynamicError
 	 */
 	public boolean eq(AnyType arg, DynamicContext context) throws DynamicError {
 		XSTime val = (XSTime) NumericType.get_single_type(arg, XSTime.class);
@@ -349,7 +346,6 @@ Cloneable {
 	 *            The XSTime to compare with
 	 * @return True if the supplied time represnts a point in time before that
 	 *         represented by the time stored. False otherwise
-	 * @throws DynamicError
 	 */
 	public boolean gt(AnyType arg, DynamicContext context) throws DynamicError {
 		XSTime val = (XSTime) NumericType.get_single_type(arg, XSTime.class);
@@ -435,7 +431,6 @@ Cloneable {
 	 *            A XDTDayTimeDuration representation of the duration of time to
 	 *            add
 	 * @return A XSTime representing the result of this addition.
-	 * @throws DynamicError
 	 */
 	public ResultSequence plus(ResultSequence arg) throws DynamicError {
 		XSDuration val = (XSDuration) NumericType

@@ -11,6 +11,8 @@
 
 package org.eclipse.wst.xml.xpath2.client;
 
+import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ListIterator;
 
@@ -37,11 +39,9 @@ import org.w3c.dom.NodeList;
  */
 public class XPathClient {
 	
-	// change value of this variable, for local environment
-	private static String DOC_BASE_PATH = "file:///d:/eclipseWorkspaces/eclipse_xpath2_3_2_maintenance/";
-	
-	private static String XML_FILE_PATH1 = "xpath2client/data/xml/person.xml";
-	private static String XSD_FILE_PATH1 = "xpath2client/data/xsd/person.xsd";
+	// relative to the xpath2client directory, which must be the working directory
+	private static String XML_FILE_PATH1 = "data/xml/person.xml";
+	private static String XSD_FILE_PATH1 = "data/xsd/person.xsd";
 
 	public static void main(String[] args) {
 		XPathClient xPathClient = new XPathClient();
@@ -51,10 +51,14 @@ public class XPathClient {
 		xPathClient.test4();
 		xPathClient.test5();
 	}
+
+	private static URL toURL(String path) throws MalformedURLException {
+		return new File(path).toURI().toURL();
+	}
 	
 	private void test1() {
 		try {
-		   URL xmlDocUrl = new URL(DOC_BASE_PATH + XML_FILE_PATH1);
+		   URL xmlDocUrl = toURL(XML_FILE_PATH1);
 		   Document document = XPath2EvaluationUtil.loadDOMDocument(xmlDocUrl);
 		   
 		   DynamicContext dc = XPath2EvaluationUtil.setupDynamicContext(null, document);
@@ -76,8 +80,8 @@ public class XPathClient {
 	
 	private void test2() {
 		try {
-		   URL xmlDocUrl = new URL(DOC_BASE_PATH + XML_FILE_PATH1);
-		   URL xsdDocUrl = new URL(DOC_BASE_PATH + XSD_FILE_PATH1);
+		   URL xmlDocUrl = toURL(XML_FILE_PATH1);
+		   URL xsdDocUrl = toURL(XSD_FILE_PATH1);
 		   Document document = XPath2EvaluationUtil.loadDOMDocument(xmlDocUrl, 
 				                                                    xsdDocUrl);
 		   
@@ -97,8 +101,8 @@ public class XPathClient {
 	
 	private void test3() {
 		try {
-		   URL xmlDocUrl = new URL(DOC_BASE_PATH + XML_FILE_PATH1);
-		   URL xsdDocUrl = new URL(DOC_BASE_PATH + XSD_FILE_PATH1);
+		   URL xmlDocUrl = toURL(XML_FILE_PATH1);
+		   URL xsdDocUrl = toURL(XSD_FILE_PATH1);
 		   Document document = XPath2EvaluationUtil.loadDOMDocument(xmlDocUrl, 
 				                                                    xsdDocUrl);
 		   
@@ -121,7 +125,7 @@ public class XPathClient {
 		// a sequence, and printing some of the underlying content of
 		// each item of the returned sequence
 		try {
-		   URL xmlDocUrl = new URL(DOC_BASE_PATH + XML_FILE_PATH1);
+		   URL xmlDocUrl = toURL(XML_FILE_PATH1);
 		   Document document = XPath2EvaluationUtil.loadDOMDocument(xmlDocUrl);
 		   
 		   DynamicContext dc = XPath2EvaluationUtil.setupDynamicContext(null, document);
@@ -153,7 +157,7 @@ public class XPathClient {
 		// demonstrates, evaluating XPath expressions, with specific context nodes
 		// somewhere within an XML instance document
 		try {
-		   URL xmlDocUrl = new URL(DOC_BASE_PATH + XML_FILE_PATH1);
+		   URL xmlDocUrl = toURL(XML_FILE_PATH1);
 		   Document document = XPath2EvaluationUtil.loadDOMDocument(xmlDocUrl);
 		   
 		   DynamicContext dc = XPath2EvaluationUtil.setupDynamicContext(null, document);

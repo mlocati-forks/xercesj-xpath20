@@ -18,12 +18,12 @@ public class XPathCupRestricted extends XPathCup {
   public XPathCupRestricted() {super();}
   
   /** Constructor which sets the default scanner. */
-  public XPathCupRestricted(java_cup.runtime.Scanner s) {super(s);}
+  public XPathCupRestricted(org.eclipse.wst.xml.xpath2.processor.internal.cup.Scanner s) {super(s);}
 
   /** Invoke a user supplied parse action. */
-  public java_cup.runtime.Symbol do_action(
+  public org.eclipse.wst.xml.xpath2.processor.internal.cup.Symbol do_action(
     int                        act_num,
-    java_cup.runtime.lr_parser parser,
+    org.eclipse.wst.xml.xpath2.processor.internal.cup.lr_parser parser,
     java.util.Stack            stack,
     int                        top)
     throws java.lang.Exception
